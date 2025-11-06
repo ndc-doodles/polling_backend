@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tamil Nadu Polling 2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="./static/css/style.css">
+</head>
+
+<body class="bg-gray-50 text-white">
+
+
+<!-- Navbar -->
+<nav id="navbar" class="fixed w-full top-0 z-50 bg-[#06038D] transition-colors duration-300 z-[9999]">
+  <div class="px-5 sm:px-10 md:px-20 flex justify-between items-center h-16">
+    <a href="index.html" class="text-2xl font-bold text-white">TN Polls 2026</a>
+
+    <!-- Desktop Menu -->
+    <div class="hidden md:flex items-center space-x-6">
+      <a href="index.html" class="hover:text-gray-200 transition">Home</a>
+      <a href="information.html" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition">Overview</a>
+      <a href="blogs.html" class="hover:text-gray-200 transition">Blogs</a>
+      <div class="flex items-center space-x-2">
+  <div class="flex items-center space-x-2">
+        <span id="lang-label" class="text-white font-semibold text-sm">தமிழ்</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" class="sr-only peer" id="lang-toggle">
+          <div class="w-10 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-500 transition-colors"></div>
+          <div class="absolute left-[2px] top-[2px] w-5 h-5 bg-white rounded-full shadow-md peer-checked:translate-x-[18px] transition-transform duration-300"></div>
+        </label>
+      </div>
+</div>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Overlay -->
+  <div id="overlay" class="fixed inset-0 bg-black/50 hidden z-40"></div>
+
+  <!-- Mobile Sidebar Menu -->
+  <div id="mobile-menu" class="fixed top-0 right-[-70%] h-full w-[70%] bg-[#06038D]/95 text-white shadow-lg transition-all duration-500 z-50 flex flex-col px-6 py-8 space-y-4">
+    <a href="index.html" class="hover:text-red-500 transition">Home</a>
+    <a href="information.html" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition">Overview</a>
+    <a href="blogs.html" class="hover:text-red-500 transition">Blogs</a>
+   <div class="flex items-center space-x-2 mt-6">
+  <span id="mobile-lang-label" class="text-white font-semibold text-sm">ENG</span>
+  <label class="relative inline-flex items-center cursor-pointer">
+    <input type="checkbox" class="sr-only peer" id="mobile-lang-toggle">
+    <!-- Track -->
+    <div class="w-10 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-500 transition-colors"></div>
+    <!-- Slider -->
+    <div class="absolute left-[2px] top-[2px] w-5 h-5 bg-white rounded-full shadow-md peer-checked:translate-x-[18px] transition-transform duration-300"></div>
+  </label>
+</div>
+
+  </div>
+</nav>
+
+
+
+<div class="flex flex-col md:flex-row min-h-screen text-black">
+  <!-- Sidebar -->
+  <aside id="sidebar" class="fixed md:relative top-0 left-0 w-64 bg-white border-r border-gray-200 p-6 min-h-screen overflow-y-auto transform -translate-x-full md:translate-x-0 transition-transform duration-300 pt-20">
+    <h2 class="text-lg font-semibold mb-4">Contents</h2>
+    <nav>
+      <ul class="space-y-2 text-sm">
+        {% for section in data %}
+          <li>
+            <button class="section-btn text-blue-600 hover:underline w-full text-left" data-target="{{ section.id }}">
+              {{ forloop.counter }}. {{ section.title }}
+            </button>
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="flex-1 p-6 md:p-10 flex flex-col space-y-8 ml-0 max-md:mt-20">
+    {% for section in data %}
+      <section id="{{ section.id }}" class="section-card {% if not forloop.first %}hidden{% endif %} w-full max-w-4xl p-6 md:p-8 bg-white rounded-lg shadow-sm">
+        <h2 class="text-3xl font-bold mb-3 pt-6">{{ section.title }}</h2>
+
+        {% if section.image %}
+  <img src="{{ section.image }}" alt="{{ section.title }}" class="w-full max-w-2xl rounded-lg mb-4">
+{% endif %}
+
+
+        <p class="leading-relaxed mb-4 text-gray-700">{{ section.summary }}</p>
+      </section>
+    {% endfor %}
+  </main>
+</div>
+
+<script>
+  const buttons = document.querySelectorAll('.section-btn');
+  const sections = document.querySelectorAll('.section-card');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-target');
+      sections.forEach(sec => sec.classList.add('hidden'));
+      document.getElementById(target).classList.remove('hidden');
+    });
+  });
+</script>
+
+
+
+
+  <footer class="bg-[#09121b] py-12 border-t border-neutral-800">
+    <div class="container mx-auto px-8 flex flex-col md:flex-row justify-between gap-8">
+      
+      <div>
+        <p class="font-mono uppercase tracking-wider text-gray-200">TN Polls 2026</p>
+        <p class="mt-4 text-sm text-gray-400 max-w-5xl">Stay informed with the latest updates from the Tamil Nadu Legislative Assembly Elections. 
+        Explore candidate profiles, polling information and news insights - all in one place.</p>
+      </div>
+
+<div class="flex flex-col md:flex-row gap-8 md:gap-16 text-gray-400">
+
+  <div>
+    <p class="uppercase text-xs text-gray-500 mb-2">[Quick Links]</p>
+    <ul class="space-y-1">
+      <li><a href="index.html#polling" class="hover:text-white transition">Candidates </a></li>
+      <li><a href="information.html" class="hover:text-white transition"> Informations</a></li>
+      <li><a href="blogs.html" class="hover:text-white transition"> News</a></li>
+
+
+    </ul>
+  </div>
+
+  <div>
+    <p class="uppercase text-xs text-gray-500 mb-2">[Latest Updates]</p>
+    <ul class="space-y-1">
+      
+      <li><a href="blogs.html" class="hover:text-white transition">Insights</a></li>
+      <li><a href="blogs.html" class="hover:text-white transition"> Events</a></li>
+    </ul>
+  </div>
+</div>
+
+    </div>
+
+   <div class="text-center text-xs text-gray-500 mt-12">
+  Make Your Voice Count – Every Vote Shapes Tamil Nadu's Future!
+</div>
+
+  </footer>
+
+
+<script src="./static/js/other_scripts.js"></script>
+
+
+
+</body>
+</html>

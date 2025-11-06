@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+<title>Tamil Nadu Polling 2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="./static/css/style.css">
+</head>
+
+<body class="bg-gray-50 text-white">
+
+
+<!-- Navbar -->
+<nav id="navbar" class="fixed w-full top-0 z-50 bg-[#06038D] transition-colors duration-300">
+  <div class="px-5 sm:px-10 md:px-20 flex justify-between items-center h-16">
+    <a href="index.html" class="text-2xl font-bold text-white">TN Polls 2026</a>
+
+    <!-- Desktop Menu -->
+    <div class="hidden md:flex items-center space-x-6">
+      <a href="index.html" class="hover:text-gray-200 transition">Home</a>
+      <a href="information.html" class="hover:text-gray-200 transition">Overview</a>
+      <a href="blogs.html" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition">Blogs</a>
+      <div class="flex items-center space-x-2">
+  <span id="lang-label" class="text-white font-semibold text-sm">ENG</span>
+  <label class="relative inline-flex items-center cursor-pointer">
+    <input type="checkbox" class="sr-only peer" id="lang-toggle">
+    <!-- Track -->
+    <div class="w-10 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-500 transition-colors"></div>
+    <!-- Slider -->
+    <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-md peer-checked:translate-x-6 transition-transform"></div>
+  </label>
+</div>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Overlay -->
+  <div id="overlay" class="fixed inset-0 bg-black/50 hidden z-40"></div>
+
+  <!-- Mobile Sidebar Menu -->
+  <div id="mobile-menu" class="fixed top-0 right-[-70%] h-full w-[70%]  bg-[#06038D]/95  text-white shadow-lg transition-all duration-500 z-50 flex flex-col px-6 py-8 space-y-4">
+    <a href="index.html" class="hover:text-red-500 transition">Home</a>
+    <a href="information.html" class="hover:text-red-500 transition">Overview</a>
+    <a href="blogs.html" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition">Blogs</a>
+   <div class="flex items-center space-x-2 mt-6">
+  <span id="mobile-lang-label" class="text-white font-semibold text-sm">ENG</span>
+  <label class="relative inline-flex items-center cursor-pointer">
+    <input type="checkbox" class="sr-only peer" id="mobile-lang-toggle">
+    <!-- Track -->
+    <div class="w-10 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-500 transition-colors"></div>
+    <!-- Slider -->
+    <div class="absolute left-[2px] top-[2px] w-5 h-5 bg-white rounded-full shadow-md peer-checked:translate-x-[18px] transition-transform duration-300"></div>
+  </label>
+</div>
+  </div>
+</nav>
+
+
+
+
+
+ <div class="w-full  mx-auto px-4 sm:px-6 md:px-20  py-8 text-black mt-20">
+
+    <!-- Featured Story -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full py-8">
+  <!-- Main Slider -->
+ <div class="lg:col-span-2 relative rounded-lg overflow-hidden w-full mx-auto">
+  <!-- Progress bars -->
+  <div class="absolute top-4 left-4 right-4 flex gap-1 z-10 cursor-pointer">
+    <div class="h-1 bg-gray-400 rounded-full flex-1 overflow-hidden" data-index="0">
+      <div class="bg-white h-full w-0 transition-all duration-300" id="progress1"></div>
+    </div>
+    <div class="h-1 bg-gray-400 rounded-full flex-1 overflow-hidden" data-index="1">
+      <div class="bg-white h-full w-0 transition-all duration-300" id="progress2"></div>
+    </div>
+    <div class="h-1 bg-gray-400 rounded-full flex-1 overflow-hidden" data-index="2">
+      <div class="bg-white h-full w-0 transition-all duration-300" id="progress3"></div>
+    </div>
+  </div>
+
+  <!-- News slides -->
+  <div class="relative h-full">
+
+<div id="newsStorySlider" class="absolute inset-0 transition-opacity duration-700 opacity-100 cursor-pointer news-card">
+  {% for news in grouped_news %}
+  <a href="{% url 'news_detail' news.id %}" class="absolute inset-0 transition-opacity duration-700 opacity-0 story-slide"
+     id="story{{ forloop.counter }}">
+    <img src="{{ news.image.url }}" alt="{{ news.headline }}" class="w-full h-full object-cover">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+
+    <div class="absolute bottom-6 left-6 text-white">
+      {% if news.label %}
+      <span class="bg-red-600 px-3 py-1 rounded text-sm font-semibold">{{ news.label }}</span>
+      {% endif %}
+      <h2 class="text-2xl font-bold mt-3 leading-snug">{{ news.headline }}</h2>
+      <p class="text-gray-300 text-sm mt-2">
+        {{ news.created|date:"M d, Y" }} | {{ news.category }}
+      </p>
+    </div>
+  </a>
+  {% endfor %}
+
+  <!-- Progress bars -->
+  <div class="absolute top-4 left-1/2 -translate-x-1/2 w-[90%] flex gap-2 z-50">
+    {% for news in grouped_news %}
+    <div class="story-progress w-full h-1 bg-white/30 rounded overflow-hidden">
+      <div class="story-progress-bar h-1 bg-white w-0"></div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Invisible tap zones (for navigation) -->
+  <div id="prevTap" class="absolute left-0 top-0 w-1/3 h-full z-40 cursor-pointer"></div>
+  <div id="nextTap" class="absolute right-0 top-0 w-1/3 h-full z-40 cursor-pointer"></div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const slides = document.querySelectorAll(".story-slide");
+  const progressBars = document.querySelectorAll(".story-progress-bar");
+  const duration = 5000; // 5 seconds per story
+  let current = 0;
+  let timer;
+
+  function showStory(index) {
+    slides.forEach((slide, i) => {
+      slide.style.opacity = i === index ? "1" : "0";
+      slide.style.zIndex = i === index ? "10" : "0";
+    });
+
+    progressBars.forEach((bar, i) => {
+      bar.style.transition = "none";
+      bar.style.width = i < index ? "100%" : "0%";
+    });
+
+    const bar = progressBars[index];
+    void bar.offsetWidth; // force reflow
+    bar.style.transition = `width ${duration}ms linear`;
+    bar.style.width = "100%";
+  }
+
+  function nextStory() {
+    current = (current + 1) % slides.length;
+    showStory(current);
+    restartTimer();
+  }
+
+  function prevStory() {
+    current = (current - 1 + slides.length) % slides.length;
+    showStory(current);
+    restartTimer();
+  }
+
+  function restartTimer() {
+    clearTimeout(timer);
+    timer = setTimeout(nextStory, duration);
+  }
+
+  function resetProgress() {
+    progressBars.forEach(bar => {
+      bar.style.transition = "none";
+      bar.style.width = "0%";
+    });
+  }
+
+  document.getElementById("nextTap").addEventListener("click", nextStory);
+  document.getElementById("prevTap").addEventListener("click", prevStory);
+
+  const slider = document.getElementById("newsStorySlider");
+  slider.addEventListener("mouseenter", () => clearTimeout(timer));
+  slider.addEventListener("mouseleave", restartTimer);
+
+  if (slides.length > 0) {
+    showStory(current);
+    restartTimer();
+  }
+});
+</script>
+
+
+
+
+
+
+  </div>
+</div>
+
+
+<div class="flex flex-col gap-4 relative z-10">
+  {% for item in last_three_news %}
+  <a href="{% url 'news_detail' item.id %}"
+     class="relative flex items-center gap-4 bg-white rounded-lg shadow-sm hover:shadow-md transition cursor-pointer news-card p-2">
+
+    {% if item.image %}
+      <img src="{{ item.image.url }}" class="w-24 h-24 object-cover rounded-md" alt="{{ item.headline }}">
+    {% endif %}
+
+    <div>
+      <p class="text-xs text-gray-400 mt-1">{{ item.created|date:"M d, Y" }}</p>
+      <h3 class="font-semibold text-black hover:underline">{{ item.headline }}</h3>
+      <p class="text-xs text-gray-500">{{ item.category }}</p>
+    </div>
+  </a>
+  {% empty %}
+  <p class="text-gray-500 text-center py-5">No recent news available.</p>
+  {% endfor %}
+</div>
+
+
+</section>
+
+
+
+
+
+
+<!-- Top Stories -->
+<!-- Top Stories -->
+<section class="mt-10 relative">
+  <h3 class="text-xl font-bold mb-4 border-l-4 border-red-600 pl-2">Top Stories</h3>
+
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+    {% for item in top_rated_news %}
+      <a href="{% url 'news_detail' item.id %}"
+         class="relative bg-white rounded-lg overflow-visible shadow-sm hover:shadow-md transition cursor-pointer news-card block"
+         data-title="{{ item.headline }}"
+         data-description="{{ item.news|striptags|truncatechars:150 }}"
+         data-image="{{ item.image.url }}"
+         data-link="{{ request.build_absolute_uri|slice:':-1' }}{% url 'news_detail' item.id %}">
+
+        <!-- Share Button -->
+        <div class="absolute top-2 right-2 z-50">
+          <button class="share-btn bg-black/50 hover:bg-black/70 text-white rounded-full w-8 h-8 flex items-center justify-center text-lg">
+            ⋮
+          </button>
+        </div>
+
+        <!-- News Image -->
+        {% if item.image %}
+          <img src="{{ item.image.url }}" alt="{{ item.headline }}" class="h-32 w-full object-cover rounded-t-lg">
+        {% endif %}
+
+        <!-- News Details -->
+        <div class="p-3">
+          <h4 class="text-sm font-semibold text-black hover:underline">{{ item.headline }}</h4>
+          <p class="text-xs text-gray-500 mt-1">{{ item.created|timesince }} ago</p>
+        </div>
+      </a>
+    {% empty %}
+      <p class="text-gray-500 col-span-full text-center">No top-rated stories available.</p>
+    {% endfor %}
+  </div>
+
+  <!-- SHARE MENU -->
+  <div id="shareMenu" class="hidden fixed inset-0 bg-black/50 z-[100] flex items-center justify-center">
+    <div class="bg-white rounded-xl p-6 w-80 shadow-lg relative">
+      <button id="closeShareMenu" class="absolute top-2 right-3 text-gray-400 hover:text-black text-xl">&times;</button>
+      <h3 class="text-lg font-bold mb-4 text-center">Share this story</h3>
+
+      <div class="flex justify-around text-center">
+        <button id="shareWhatsApp" class="flex flex-col items-center">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" class="w-8 h-8 mb-1">
+          <span class="text-xs">WhatsApp</span>
+        </button>
+        <button id="shareFacebook" class="flex flex-col items-center">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" class="w-8 h-8 mb-1">
+          <span class="text-xs">Facebook</span>
+        </button>
+        <button id="shareInstagram" class="flex flex-col items-center">
+          <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" class="w-8 h-8 mb-1">
+          <span class="text-xs">Instagram</span>
+        </button>
+        <button id="copyLink" class="flex flex-col items-center">
+          <img src="https://cdn-icons-png.flaticon.com/512/2958/2958783.png" class="w-8 h-8 mb-1">
+          <span class="text-xs">Copy Link</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const shareMenu = document.getElementById("shareMenu");
+  const closeShareMenu = document.getElementById("closeShareMenu");
+  const shareButtons = document.querySelectorAll(".share-btn");
+
+  let currentNews = null;
+
+  // Open share menu
+  shareButtons.forEach((btn) => {
+    btn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      event.preventDefault();
+
+      currentNews = btn.closest(".news-card").dataset;
+      shareMenu.classList.remove("hidden");
+    });
+  });
+
+  // Close share menu
+  closeShareMenu.addEventListener("click", () => shareMenu.classList.add("hidden"));
+  shareMenu.addEventListener("click", (e) => {
+    if (e.target === shareMenu) shareMenu.classList.add("hidden");
+  });
+
+  // Simple share text generator
+  function getShareText() {
+    const title = currentNews.title || "News Update";
+    const description = currentNews.description || "";
+    const link = currentNews.link;
+    return `${title}\n\n${description}\n\nRead more: ${link}`;
+  }
+
+  // Platform shares (text + link only)
+  document.getElementById("shareWhatsApp").addEventListener("click", () => {
+    const text = getShareText();
+    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, "_blank");
+    shareMenu.classList.add("hidden");
+  });
+
+  document.getElementById("shareFacebook").addEventListener("click", () => {
+    const text = getShareText();
+    const url = currentNews.link;
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`,
+      "_blank"
+    );
+    shareMenu.classList.add("hidden");
+  });
+
+  document.getElementById("shareInstagram").addEventListener("click", () => {
+    const text = getShareText();
+    alert("📸 Instagram doesn’t support link sharing. Text copied!");
+    navigator.clipboard.writeText(text);
+    shareMenu.classList.add("hidden");
+  });
+
+  document.getElementById("copyLink").addEventListener("click", () => {
+    const text = getShareText();
+    navigator.clipboard.writeText(text);
+    alert("✅ Headline, description, and link copied!");
+    shareMenu.classList.add("hidden");
+  });
+});
+</script>
+
+
+
+
+<!-- Latest Stories & Upcoming Streaming -->
+<section class="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+  <!-- Latest Stories -->
+  <div class="lg:col-span-2">
+    <h3 class="text-xl font-bold mb-4 border-l-4 border-blue-600 pl-2">Latest Stories</h3>
+
+    {% for latest in latest_news %}
+
+    <article
+      class="relative bg-white rounded-lg shadow-sm p-6 mb-6 hover:shadow-md transition cursor-pointer overflow-visible news-card"
+      data-title="{{ latest.headline }}"
+      data-description="{{ latest.news }}"
+      data-date="{{ latest.created }}"
+      data-image="{{ latest.image.url }}"
+      data-link="{{ request.build_absolute_uri|slice:':-1' }}{% url 'news_detail' latest.id %}"
+    >
+
+      <!-- Share Button -->
+      <div class="absolute top-3 right-3 z-50">
+        <button
+          class="share-btn bg-black/50 hover:bg-black/70 text-white rounded-full w-8 h-8 flex items-center justify-center text-lg"
+          title="Share"
+        >
+          ⋮
+        </button>
+      </div>
+    <a href="{% url 'news_detail' latest.id %}">
+      <!-- Content -->
+      <h4 class="text-lg font-semibold mb-2">{{ latest.headline }}</h4>
+      <p class="text-sm text-gray-500 mb-3">{{ latest.news }}</p>
+      <p class="text-xs text-gray-400">{{ latest.created }}</p>
+    </a>
+    </article>
+    {% endfor %}
+  </div>
+
+  <!-- Upcoming Streaming -->
+  <div>
+    <h3 class="text-xl font-bold mb-4 border-l-4 border-green-600 pl-2">Upcoming Streaming</h3>
+    <div class="flex flex-col gap-4">
+
+      {% for upcoming in upcoming_news %}
+      <div
+        class="relative bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition cursor-pointer news-card"
+        data-title="{{ upcoming.headline }}"
+        data-description="{{ upcoming.news }}"
+        data-date="{{ upcoming.created }}"
+        data-image="{{ upcoming.image.url }}"
+        data-link="{{ request.build_absolute_uri|slice:':-1' }}{% url 'news_detail' upcoming.id %}"
+      >
+
+        <!-- Share Button -->
+        <div class="absolute top-2 right-2 z-50">
+          <button
+            class="share-btn bg-black/50 hover:bg-black/70 text-white rounded-full w-8 h-8 flex items-center justify-center text-lg"
+            title="Share"
+          >
+            ⋮
+          </button>
+        </div>
+          <a href="{% url 'news_detail' upcoming.id %}">
+
+        <!-- Card Content -->
+        <div class="flex gap-4">
+          <img src="{{ upcoming.image.url }}" alt="{{ upcoming.headline }}" class="w-20 h-20 rounded object-cover">
+          <div>
+            <p class="text-sm text-gray-500">{{ upcoming.created }}</p>
+            <h4 class="text-base font-semibold">{{ upcoming.headline }}</h4>
+            <p class="text-gray-500 text-sm mt-1 line-clamp-2">
+              {{ upcoming.news }}
+            </p>
+          </div>
+        </div>
+          </a>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+
+
+ </div>
+
+
+
+
+
+
+
+  <footer class="bg-[#09121b] py-12 border-t border-neutral-800">
+    <div class="container mx-auto px-8 flex flex-col md:flex-row justify-between gap-8">
+
+      <div>
+        <p class="font-mono uppercase tracking-wider text-gray-200">TN Polls 2026</p>
+        <p class="mt-4 text-sm text-gray-400 max-w-5xl">Stay informed with the latest updates from the Tamil Nadu Legislative Assembly Elections.
+        Explore candidate profiles, polling information and news insights - all in one place.</p>
+      </div>
+
+<div class="flex flex-col md:flex-row gap-8 md:gap-16 text-gray-400">
+
+  <div>
+    <p class="uppercase text-xs text-gray-500 mb-2">[Quick Links]</p>
+    <ul class="space-y-1">
+      <li><a href="index.html#polling" class="hover:text-white transition">Candidates </a></li>
+      <li><a href="information.html" class="hover:text-white transition"> Informations</a></li>
+      <li><a href="blogs.html" class="hover:text-white transition"> News</a></li>
+
+
+    </ul>
+  </div>
+
+  <div>
+    <p class="uppercase text-xs text-gray-500 mb-2">[Latest Updates]</p>
+    <ul class="space-y-1">
+
+      <li><a href="blogs.html" class="hover:text-white transition">Insights</a></li>
+      <li><a href="blogs.html" class="hover:text-white transition"> Events</a></li>
+    </ul>
+  </div>
+</div>
+
+    </div>
+
+   <div class="text-center text-xs text-gray-500 mt-12">
+  Make Your Voice Count – Every Vote Shapes Tamil Nadu's Future!
+</div>
+
+  </footer>
+
+
+
+<script src="./static/js/other_scripts.js"></script>
+
+
+
+</body>
+</html>

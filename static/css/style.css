@@ -1,0 +1,20 @@
+html {
+  scroll-behavior: smooth;
+}
+.outlined-text {
+  color: transparent;
+  -webkit-text-stroke: 1px white;
+  text-stroke: 1px white; /* fallback */
+  font-weight: 600;
+}
+
+
+h1{
+  font-family: "Montserrat", sans-serif;
+}
+
+p{
+    font-family: "Roboto", sans-serif;
+
+}
+

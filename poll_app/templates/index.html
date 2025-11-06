@@ -1,0 +1,1015 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tamil Nadu Polling 2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Geist:wght@100..900&family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Michroma&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Play:wght@400;700&family=Saira:ital,wght@0,100..900;1,100..900&family=Zalando+Sans+SemiExpanded:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Geist:wght@100..900&family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Michroma&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Play:wght@400;700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&family=Saira:ital,wght@0,100..900;1,100..900&family=Zalando+Sans+SemiExpanded:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-gray-50 text-white">
+
+<nav id="navbar" class="fixed w-full top-0 z-50 bg-transparent backdrop-blur-md border-b border-white/30 transition-colors duration-300">
+  <div class="px-6 md:px-20 flex justify-between items-center h-16">
+    <a href="index.html" class="text-2xl font-bold text-white">TN Polls 2026</a>
+
+    <div class="hidden md:flex items-center space-x-6">
+      <a href="index.html" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition">
+        Home
+      </a>
+      <a href="information.html" class="text-white hover:text-gray-200 transition">Overview</a>
+      <a href="blogs.html" class="text-white hover:text-gray-200 transition">Blogs</a>
+
+      <div class="flex items-center space-x-2">
+        <span id="lang-label" class="text-white font-semibold text-sm">TAMIL</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" class="sr-only peer" id="lang-toggle">
+          <div class="w-10 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-500 transition-colors"></div>
+          <div class="absolute left-[2px] top-[2px] w-5 h-5 bg-white rounded-full shadow-md peer-checked:translate-x-[18px] transition-transform duration-300"></div>
+        </label>
+      </div>
+    </div>
+
+    <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+
+  <div id="overlay" class="fixed inset-0 bg-black/50 hidden z-50"></div>
+
+  <div id="mobile-menu" class="fixed top-0 right-[-70%] h-screen w-[70%] bg-[#06038D]/95 text-white shadow-lg transition-all duration-500 z-[9999] flex flex-col px-6 py-8 space-y-4">
+    <a href="index.html" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition">Home</a>
+    <a href="information.html" class="hover:text-red-500 transition">Overview</a>
+    <a href="blogs.html" class="hover:text-red-500 transition">Blogs</a>
+
+    <div class="flex items-center space-x-2 mt-6">
+      <span id="mobile-lang-label" class="text-white font-semibold text-sm">TAMIL</span>
+      <label class="relative inline-flex items-center cursor-pointer">
+        <input type="checkbox" class="sr-only peer" id="mobile-lang-toggle">
+        <div class="w-10 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-500 transition-colors"></div>
+        <div class="absolute left-[2px] top-[2px] w-5 h-5 bg-white rounded-full shadow-md peer-checked:translate-x-[18px] transition-transform duration-300"></div>
+      </label>
+    </div>
+  </div>
+</nav>
+
+
+
+<section id="carousel" class="relative w-full h-screen overflow-hidden">
+
+  <div class="absolute inset-0 opacity-0 transition-opacity duration-1000 slide">
+    <img src="./static/images/india.png" class="w-full h-full object-cover" alt="Tamil Nadu Map">
+    <div class="absolute inset-0 bg-black/40"></div>
+    <div class="absolute bottom-[50%] md:bottom-[20%] left-[5%] z-20 space-y-8">
+      <h1 class="text-5xl md:text-[4rem]  font-bold space-y-2 md:space-y-12 uppercase">
+        <span class="block text-white">Empower Democracy</span>
+        <span class="block outlined-text">Vote Now!</span>
+      </h1>
+      <p class="text-white/90">Shape the future of Tamil Nadu with every choice you make</p>
+    </div>
+  </div>
+
+
+  <div class="absolute inset-0 opacity-0 transition-opacity duration-1000 slide">
+
+  <img src="./static/images/img0.jpg"
+       class="hidden md:block w-full h-full object-cover"
+       alt="Chennai">
+
+  <img src="./static/images/mobile_img0.jpg"
+       class="block md:hidden w-full h-full object-cover"
+       alt="Chennai Mobile">
+
+  <div class="absolute inset-0 bg-black/40"></div>
+
+  <div class="absolute bottom-[50%] md:bottom-[20%] left-[5%] z-20 space-y-8">
+    <h1 class="text-5xl md:text-[4rem] font-bold space-y-2 md:space-y-12 uppercase">
+      <span class="block text-white">Your Vote Matters</span>
+      <span class="block outlined-text">Be Heard!</span>
+    </h1>
+    <p class="text-white/90 text-sm md:text-base">
+      Be informed, be responsible and make your voice heard
+    </p>
+  </div>
+
+</div>
+
+
+  <div class="absolute inset-0 opacity-0 transition-opacity duration-1000 slide">
+    <img src="./static/images/india2.png" class="w-full h-full object-cover" alt="Madurai">
+    <div class="absolute inset-0 bg-black/40"></div>
+  <div class="absolute bottom-[50%] md:bottom-[20%]  left-[5%] z-20 space-y-8">
+      <h1 class="text-5xl md:text-[4rem] font-bold space-y-2 md:space-y-12 uppercase">
+ <span class="block text-white">Meet Candidates</span>
+<span class="block outlined-text">Vote Wise</span>
+
+</h1>
+
+      <p class="text-white/90">Explore policies promises and visions before casting your vote</p>
+    </div>
+  </div>
+
+
+  <div class="absolute right-0 top-[50%] md:top-1/4 w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 bg-white/70 backdrop-blur-md border-l-4 border-[#FF671F] rounded-2xl flex flex-col justify-center p-6 space-y-4 slide-box md:mr-10" data-slide="0">
+    <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">Vote for Your Candidate</h1>
+    <p class="text-xs sm:text-sm md:text-sm text-gray-800 max-w-sm">
+      Make your voice count by choosing the candidate who best represents your vision for Tamil Nadu’s future.
+    </p>
+    <a href="#polling" onclick="document.querySelector('#polling').scrollIntoView({ behavior: 'smooth', block: 'start' }); return false;"
+       class="bg-[#FF671F] hover:bg-[#FF671F]/80 text-white font-semibold px-4 py-2 rounded-full shadow-lg transition">
+      Go to Polling
+    </a>
+  </div>
+
+
+  <div class="absolute right-0 top-[50%] md:top-1/4 w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 bg-white/70 backdrop-blur-md border-l-4 border-[#06038D] rounded-2xl flex flex-col justify-center p-6 space-y-4 slide-box hidden md:mr-10" data-slide="1">
+    <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">Participate in Democracy</h1>
+    <p class="text-xs sm:text-sm md:text-sm text-gray-800 max-w-sm">
+      Stay informed about candidates, policies and key issues to make responsible choices.
+    </p>
+    <a href="#info-section" class="bg-[#06038D] hover:bg-[#06038D]/80 text-white font-semibold px-4 py-2 rounded-full shadow-lg transition">
+      Learn More
+    </a>
+  </div>
+
+
+  <div class="absolute right-0 top-[50%] md:top-1/4 w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 bg-white/70 backdrop-blur-md border-l-4 border-[#046A38] rounded-2xl flex flex-col justify-center p-6 space-y-4 slide-box hidden md:mr-10" data-slide="2">
+    <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">Latest Political Updates</h1>
+    <p class="text-xs sm:text-sm md:text-sm text-gray-800 max-w-sm">
+      Get the newest insights, news and developments from the political landscape of Tamil Nadu.
+    </p>
+    <a href="#news" class="bg-[#046A38] hover:bg-[#046A38]/80 text-white font-semibold px-4 py-2 rounded-full shadow-lg transition">
+      Read Updates
+    </a>
+  </div>
+
+
+  <div class="absolute bottom-6 right-6 flex gap-3 z-30">
+
+    <button id="prev-slide" class="w-12 h-12 flex items-center justify-center bg-white/30 border border-white rounded-lg hover:bg-white/50 transition">
+      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+
+
+    <button id="next-slide" class="w-12 h-12 flex items-center justify-center bg-white/30 border border-white rounded-lg hover:bg-white/50 transition">
+      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </div>
+</section>
+
+
+
+
+
+<div id="polling">
+
+</div>
+
+<section class="my-20 px-4 max-w-7xl mx-auto">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+    <div class="md:w-2/3">
+      <p class="text-xl text-[#06038D] font-semibold uppercase mb-2">Your Voice Matters</p>
+      <h1 class="text-4xl md:text-5xl font-bold uppercase text-black tracking-wide mb-4">
+        Meet the Candidates
+      </h1>
+      <p class="text-gray-800 text-lg leading-relaxed">
+        Explore the candidates contesting the Tamil Nadu Legislative Assembly Election 2026.
+        <span class="text-[#046A38]">Check your district and constituency, learn about their vision, and vote here!</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="relative flex flex-wrap md:flex-nowrap items-center justify-between gap-4 mt-10 border-t border-blue-200 pt-6">
+    <div class="flex items-center gap-2 md:gap-3 w-full md:w-auto">
+      <div class="h-[3px] w-10 md:w-16 bg-[#06038D] rounded-full animate-pulse"></div>
+      <p class="text-[#06038D] font-semibold text-xs md:text-sm whitespace-nowrap">
+        Filter by <span class="text-green-700">District</span>,
+        <span class="text-orange-600">Constituency</span> or search by
+        <span class="text-[#06038D]">Candidate</span> /
+        <span class="text-[#FF671F]">Party</span>.
+      </p>
+    </div>
+
+    <div class="flex flex-wrap md:flex-nowrap justify-end items-center gap-3 w-full">
+      <!-- District -->
+      <select id="districtFilter"
+        class="border-2 border-blue-700 bg-blue-100 text-blue-900 font-semibold px-4 py-2 rounded-full w-full md:w-[180px] text-sm">
+        <option value="">Select District</option>
+        {% for d in districts %}
+          <option value="{{ d.id }}">{{ d.name }}</option>
+        {% endfor %}
+      </select>
+
+      <!-- Constituency -->
+      <select id="constituencyFilter"
+        class="border-2 border-green-700 bg-green-100 text-green-900 font-semibold px-4 py-2 rounded-full w-full md:w-[180px] text-sm">
+        <option value="">Select Constituency</option>
+      </select>
+
+      <!-- Search -->
+      <input type="text" id="searchInput" placeholder="Search..."
+        class="border-2 border-[#06038D] bg-white px-4 py-2 rounded-full text-gray-800 focus:ring-4 focus:ring-blue-400 focus:outline-none w-full md:w-[200px] text-sm" />
+    </div>
+  </div>
+
+  <!-- Candidate Grid -->
+  <div id="candidatesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+    {% for cand in candidates %}
+      <div class="relative group rounded-2xl overflow-hidden shadow-xl bg-white hover:shadow-2xl transition" data-id="{{ cand.id }}">
+        <div class="absolute top-3 right-3 z-20">
+          {% if cand.party.image %}
+            <img src="{{ cand.party.image.url }}" alt="{{ cand.party.name }}" class="w-16 h-16 object-cover rounded-full">
+          {% endif %}
+        </div>
+        <img src="{{ cand.image.url }}" alt="{{ cand.name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-5 text-white">
+          <h1 class="text-2xl font-bold">{{ cand.name }}</h1>
+          <p class="text-sm">District: {{ cand.district }}</p>
+          <p class="text-sm">Constituency: {{ cand.constituency }}</p>
+          <p class="text-sm">Party: {{ cand.party }}</p>
+          <button class="mt-3 bg-green-700 hover:bg-green-500 px-7 py-2 rounded-full font-semibold transition">Vote</button>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+
+</section>
+
+
+<!-- Login Modal -->
+<div id="loginModal"
+     class="fixed inset-0 bg-black/70 hidden justify-center items-center z-[9999]">
+  <div class="bg-white p-8 rounded-2xl w-full max-w-md relative">
+    <h2 class="text-2xl font-bold mb-6 text-center text-[#06038D]">Login to Vote</h2>
+
+    <div class="space-y-4">
+      <!-- Name -->
+      <div>
+        <label class="block text-gray-700 text-sm font-semibold mb-1">Name</label>
+        <input id="loginName" type="text"
+               class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#06038D] text-black" />
+      </div>
+
+      <!-- Age -->
+      <div>
+        <label class="block text-gray-700 text-sm font-semibold mb-1">Age</label>
+        <input id="loginAge" type="number"
+               class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#06038D] text-black" />
+      </div>
+
+      <!-- Phone + Send OTP -->
+      <div class="flex items-center space-x-2">
+        <input id="phone" type="text" placeholder="Phone Number"
+               class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#06038D] text-black" />
+        <button id="sendOtpBtn" type="button"
+                class="bg-[#06038D] text-white px-4 py-2 rounded-lg hover:bg-[#030268] text-sm font-semibold whitespace-nowrap">
+          Send OTP
+        </button>
+      </div>
+
+      <!-- OTP Field (hidden by default) -->
+      <div id="otpContainer" class="hidden">
+        <label class="block text-gray-700 text-sm font-semibold mb-1">Enter OTP</label>
+        <input id="otpInput" type="text" placeholder="Enter OTP"
+               class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#06038D] text-black" />
+      </div>
+
+      <!-- Submit -->
+      <button id="loginSubmit" type="button"
+              class="w-full bg-[#06038D] hover:bg-[#030268] text-white font-semibold py-2 rounded-lg mt-4">
+        Verify & Continue
+      </button>
+
+    </div>
+  </div>
+</div>
+
+<!-- Vote Confirmation Modal -->
+<div id="voteConfirmModal" class="fixed inset-0 bg-black/60 hidden justify-center items-center z-[9999]">
+  <div class="bg-white p-6 rounded-xl w-80 shadow-lg text-center">
+    <h2 id="confirmText" class="text-lg font-semibold mb-4 text-gray-800"></h2>
+    <div class="flex justify-center gap-3">
+      <button id="confirmVoteBtn" type="button"
+              class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">Confirm</button>
+      <button type="button" onclick="closeConfirmModal()" class="bg-gray-300 px-4 py-2 rounded">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div id="successModal" class="fixed inset-0 bg-black/60 hidden justify-center items-center z-[9999]">
+  <div class="bg-white p-6 rounded-xl w-80 shadow-lg text-center">
+    <h2 class="text-green-700 text-xl font-bold mb-2">Vote Submitted!</h2>
+    <p class="text-gray-600 text-sm">Thank you for casting your vote.</p>
+    <button type="button" onclick="closeSuccessModal()" class="mt-3 bg-blue-600 text-white px-4 py-2 rounded">OK</button>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("✅ DOM Loaded");
+
+  // 🔹 DOM Elements
+  const districtSelect = document.getElementById("districtFilter");
+  const constituencySelect = document.getElementById("constituencyFilter");
+  const searchInput = document.getElementById("searchInput");
+  const candidatesGrid = document.getElementById("candidatesGrid");
+
+  const loginModal = document.getElementById("loginModal");
+  const voteConfirmModal = document.getElementById("voteConfirmModal");
+  const successModal = document.getElementById("successModal");
+  const loginSubmit = document.getElementById("loginSubmit");
+  const sendOtpBtn = document.getElementById("sendOtpBtn");
+  const otpContainer = document.getElementById("otpContainer");
+  const confirmVoteBtn = document.getElementById("confirmVoteBtn");
+
+  let selectedCandidateId = null;
+  let selectedCandidateName = null;
+  let voterData = {};
+
+  // ==========================================================
+  // 🔹 1. LOAD CANDIDATES
+  // ==========================================================
+  function loadCandidates(districtId = "", constituencyId = "", search = "") {
+    const url = `/filter-candidates/?district=${districtId}&constituency=${constituencyId}&search=${encodeURIComponent(search)}`;
+
+    console.log("📡 Loading candidates from:", url);
+
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        candidatesGrid.innerHTML = "";
+
+        if (!data.candidates || data.candidates.length === 0) {
+          candidatesGrid.innerHTML = `<p class="text-gray-600 col-span-full text-center text-lg">No candidates found.</p>`;
+          return;
+        }
+
+        data.candidates.forEach(c => {
+          const card = document.createElement("div");
+          card.className = "relative group rounded-2xl overflow-hidden shadow-xl bg-white hover:shadow-2xl transition";
+          card.dataset.id = c.id;
+
+          card.innerHTML = `
+            <div class="absolute top-3 right-3 z-20">
+              ${c.party_image ? `<img src="${c.party_image}" alt="${c.party}" class="w-16 h-16 object-cover rounded-full">` : ""}
+            </div>
+            <img src="${c.image}" alt="${c.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-5 text-white">
+              <h1 class="text-2xl font-bold">${c.name}</h1>
+              <p class="text-sm">District: ${c.district}</p>
+              <p class="text-sm">Constituency: ${c.constituency}</p>
+              <p class="text-sm">Party: ${c.party}</p>
+              <button data-id="${c.id}" type="button"
+                class="vote-btn mt-3 bg-green-700 hover:bg-green-500 px-7 py-2 rounded-full font-semibold transition">
+                Vote
+              </button>
+            </div>
+          `;
+          candidatesGrid.appendChild(card);
+        });
+      })
+      .catch(err => {
+        console.error("❌ Error loading candidates:", err);
+        candidatesGrid.innerHTML = `<p class="text-red-600 col-span-full text-center text-lg">Error loading candidates.</p>`;
+      });
+  }
+
+  // ==========================================================
+  // 🔹 2. FILTER HANDLERS
+  // ==========================================================
+  districtSelect.addEventListener("change", function () {
+    const districtId = this.value;
+    constituencySelect.innerHTML = '<option value="">Select Constituency</option>';
+
+    if (!districtId) return loadCandidates();
+
+    fetch(`/get_constituencies/${districtId}/`)
+      .then(res => res.json())
+      .then(data => {
+        data.constituencies.forEach(c => {
+          const option = document.createElement("option");
+          option.value = c.id;
+          option.textContent = c.name;
+          constituencySelect.appendChild(option);
+        });
+        loadCandidates(districtId, "", searchInput.value.trim());
+      })
+      .catch(err => console.error("Error loading constituencies:", err));
+  });
+
+  constituencySelect.addEventListener("change", () =>
+    loadCandidates(districtSelect.value, constituencySelect.value, searchInput.value.trim())
+  );
+
+  searchInput.addEventListener("input", debounce(() =>
+    loadCandidates(districtSelect.value, constituencySelect.value, searchInput.value.trim()), 500)
+  );
+
+  // ==========================================================
+  // 🔹 3. HANDLE "VOTE" CLICK
+  // ==========================================================
+  candidatesGrid.addEventListener("click", function (e) {
+    const button = e.target.closest("button.vote-btn");
+    if (!button) return;
+
+    const card = button.closest("[data-id]");
+    const candidateId = button.dataset.id || card?.dataset.id;
+
+    if (!candidateId) {
+      alert("Error: Candidate ID missing. Please refresh and try again.");
+      return;
+    }
+
+    selectedCandidateId = candidateId;
+    selectedCandidateName = card.querySelector("h1")?.textContent || "Candidate";
+
+    // Reset form
+    document.getElementById("loginName").value = "";
+    document.getElementById("loginAge").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("otpInput").value = "";
+    otpContainer.classList.add("hidden");
+
+    // Show login modal
+    loginModal.classList.remove("hidden");
+    loginModal.classList.add("flex");
+    console.log("🗳 Vote clicked for:", selectedCandidateName, selectedCandidateId);
+  });
+
+  // ==========================================================
+  // 🔹 4. SEND OTP
+  // ==========================================================
+  sendOtpBtn.addEventListener("click", function () {
+    const phone = document.getElementById("phone").value.trim();
+    if (!phone) return alert("Enter phone number");
+
+    fetch("/send-otp/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "X-CSRFToken": getCookie("csrftoken"),
+      },
+      body: `phone=${encodeURIComponent(phone)}`,
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) return alert(data.error);
+        otpContainer.classList.remove("hidden");
+        alert(data.message || "OTP sent successfully!");
+      })
+      .catch(err => console.error("Send OTP error:", err));
+  });
+
+  // ==========================================================
+  // 🔹 5. VERIFY OTP
+  // ==========================================================
+  loginSubmit.addEventListener("click", function () {
+    const name = document.getElementById("loginName").value.trim();
+    const age = document.getElementById("loginAge").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const otp = document.getElementById("otpInput").value.trim();
+
+    if (!name || !age || !phone || !otp)
+      return alert("Please fill all fields and enter OTP");
+    if (!selectedCandidateId)
+      return alert("Candidate ID missing. Please refresh.");
+
+    voterData = { name, age, phone };
+
+    fetch("/verify-vote/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "X-CSRFToken": getCookie("csrftoken"),
+      },
+      body: `candidate_id=${selectedCandidateId}&name=${encodeURIComponent(name)}&age=${age}&phone=${encodeURIComponent(phone)}&otp=${otp}`,
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) return alert(data.error || "Invalid OTP");
+        loginModal.classList.add("hidden");
+        voteConfirmModal.classList.remove("hidden");
+        voteConfirmModal.classList.add("flex");
+        document.getElementById("confirmText").textContent =
+          `Confirm your vote for ${selectedCandidateName}?`;
+      })
+      .catch(err => console.error("Verify OTP error:", err));
+  });
+
+  // ==========================================================
+  // 🔹 6. SUBMIT FINAL VOTE (FIXED)
+  // ==========================================================
+  confirmVoteBtn.addEventListener("click", async function () {
+    console.log("🟩 Confirm button clicked");
+
+    if (!selectedCandidateId) {
+      alert("Candidate ID missing. Please refresh.");
+      return;
+    }
+
+    try {
+      const res = await fetch("/submit-vote/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: `candidate_id=${selectedCandidateId}&name=${encodeURIComponent(voterData.name)}&age=${voterData.age}&phone=${encodeURIComponent(voterData.phone)}`,
+      });
+
+      const text = await res.text();
+      console.log("📨 Raw response:", text);
+
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (err) {
+        console.error("❌ Invalid JSON:", text);
+        alert("Server returned an invalid response.");
+        return;
+      }
+
+      if (data.error) return alert(data.error || "Error submitting vote");
+
+      voteConfirmModal.classList.add("hidden");
+      successModal.classList.remove("hidden");
+      successModal.classList.add("flex");
+      console.log("🎉 Vote submitted successfully!");
+    } catch (err) {
+      console.error("Submit vote error:", err);
+      alert("Error submitting your vote. Please try again.");
+    }
+  });
+
+  // ==========================================================
+  // 🔹 7. HELPERS
+  // ==========================================================
+  window.closeConfirmModal = () => voteConfirmModal.classList.add("hidden");
+  window.closeSuccessModal = () => successModal.classList.add("hidden");
+
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let cookie of cookies) {
+        cookie = cookie.trim();
+        if (cookie.startsWith(name + "=")) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  function debounce(func, delay) {
+    let timer;
+    return function (...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => func.apply(this, args), delay);
+    };
+  }
+
+  // ✅ Initial load
+  loadCandidates();
+});
+</script>
+
+<style>
+/* Keep card sizes consistent while filtering */
+#candidatesGrid .group {
+  min-height: 450px; /* same visual height for all cards */
+  max-height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Ensure images don’t resize or stretch */
+#candidatesGrid .group img {
+  height: 100%;
+  object-fit: cover;
+}
+
+/* When hiding a card, just fade instead of collapsing layout */
+#candidatesGrid .group.hidden {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Tamil Nadu Information Preview Section -->
+<section class="bg-[#06038D] py-16 px-6 md:px-20 text-white text-center rounded-2xl mx-4 md:mx-20 mt-12 shadow-xl relative overflow-hidden">
+
+  <!-- Decorative Gradient Overlay -->
+  <div class="absolute inset-0 bg-gradient-to-r from-[#06038D]/90 via-[#0A0A0A]/30 to-[#FF671F]/80 opacity-80"></div>
+
+  <div class="relative z-10">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4 uppercase">Know Tamil Nadu Better</h2>
+    <p class="text-white/90 mb-10 max-w-2xl mx-auto">
+      Explore the heart of Tamil Nadu - from its people and culture to political insights and voting essentials.
+    </p>
+
+    <!-- Info Highlights -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+
+      <!-- Card 1 -->
+      <div class="bg-white/10 backdrop-blur-lg p-8 rounded-xl border border-white/20 hover:scale-105 transition text-center">
+  <div class="flex justify-center mb-4">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24">
+      <path fill="#fff" d="M14.35 20.775L9 18.9l-4.65 1.8q-.25.1-.488.063t-.437-.163t-.312-.337T3 19.775V5.75q0-.325.188-.575T3.7 4.8l4.65-1.575q.15-.05.313-.075T9 3.125t.338.025t.312.075L15 5.1l4.65-1.8q.25-.1.488-.062t.437.162t.313.338t.112.487V18.25q0 .325-.187.575t-.513.375l-4.65 1.575q-.15.05-.312.075t-.338.025t-.337-.025t-.313-.075M14 18.55V6.85l-4-1.4v11.7z"/>
+    </svg>
+  </div>
+  <h3 class="font-semibold text-xl mb-2">District Insights</h3>
+  <p class="text-white/80 text-sm">Learn about Tamil Nadu’s 38 districts – their population, geography and local leadership.</p>
+</div>
+
+
+     <!-- Card 2 -->
+<div class="bg-white/10 backdrop-blur-lg p-8 rounded-xl border border-white/20 hover:scale-105 transition text-center">
+  <div class="flex justify-center mb-4">
+    <img src="./static/images/parliament.png" alt="Parliament Icon" class="w-12 h-12 object-contain">
+  </div>
+  <h3 class="font-semibold text-xl mb-2">Political Overview</h3>
+  <p class="text-white/80 text-sm">
+    Know the major parties, leaders and movements shaping Tamil Nadu’s democracy.
+  </p>
+</div>
+
+      <!-- Card 3 -->
+      <div class="bg-white/10 backdrop-blur-lg p-8 rounded-xl border border-white/20 hover:scale-105 transition">
+<div class="flex justify-center mb-4">
+    <img src="./static/images/vote.png" alt="Parliament Icon" class="w-12 h-12 object-contain">
+  </div>        <h3 class="font-semibold text-xl mb-2">Voting Essentials</h3>
+        <p class="text-white/80 text-sm">Get voter info, learn about polling dates and understand how your vote counts.</p>
+      </div>
+
+    </div>
+
+    <!-- Button -->
+    <div class="mt-12">
+      <a href="information.html" class="bg-white text-[#06038D] font-semibold px-8 py-3 rounded-full shadow-lg hover:bg-white/90 transition-all duration-300 hover:scale-105">
+        Visit Information Page →
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<section id="opinion-section" class="py-20 bg-gray-50 relative overflow-hidden">
+  <div class="container mx-auto px-6 lg:px-20">
+    <div class="relative grid grid-cols-1 lg:grid-cols-2 items-center gap-8">
+
+      <!-- Info Panel -->
+      <div class="bg-[#06038D] text-white  p-10 sm:p-12 rounded-xl shadow-2xl relative z-20 order-1 lg:order-2 text-center lg:text-left">
+        <h1 class="text-3xl sm:text-4xl font-bold mb-4">Public Opinion Form</h1>
+        <p class="text-base sm:text-lg text-gray-200 leading-relaxed">
+          We value your thoughts! Please share your opinion, feedback, or suggestions to help us improve services and make informed decisions. Your responses will remain confidential.
+        </p>
+      </div>
+
+      <!-- Form Panel -->
+      <div class="bg-gray-200 py-8 px-4 sm:p-12 rounded-xl shadow-xl relative z-10 order-2 lg:order-1 lg:w-[110%]">
+        <form class="space-y-6" method="POST" action="#opinion-section">
+          {% csrf_token %}
+             <input type="hidden" name="form-type" value="opinion">
+          <!-- First & Last Name -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+
+              <label for="first-name" class="block text-sm font-bold text-gray-700 mb-1 uppercase">First Name</label>
+              <input type="text" id="first-name" name="first-name"
+                     class="w-full rounded-md border text-black border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#06038D]"
+                     placeholder="First Name" required>
+            </div>
+            <div>
+              <label for="last-name" class="block text-sm font-bold text-gray-700 mb-1 uppercase">Last Name</label>
+              <input type="text" id="last-name" name="last-name"
+                     class="w-full rounded-md text-black border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#06038D]"
+                     placeholder="Last Name" required>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="email" class="block text-sm font-bold text-gray-700 mb-1 uppercase">Email Address</label>
+            <input type="email" id="email" name="email"
+                   class="w-full text-black rounded-md border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#06038D]"
+                   placeholder="you@example.com" required>
+          </div>
+
+          <!-- Opinion -->
+          <div>
+            <label for="message" class="block text-sm font-bold text-gray-700 mb-1 uppercase">Your Opinion</label>
+            <textarea id="message" name="message" rows="5"
+                      class="w-full rounded-md text-black border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#06038D]"
+                      placeholder="Share your opinion…" required></textarea>
+          </div>
+
+          <!-- Submit -->
+          <div class="text-center lg:text-left">
+            <button type="submit"
+                    class="bg-gradient-to-r from-[#06038D] to-[red] hover:bg-[#2C38C5] text-white font-semibold px-8 py-3 rounded-md transition-colors duration-300">
+              Submit Opinion
+            </button>
+          </div>
+        </form>
+
+{% if messages %}
+  <!-- Popup Overlay -->
+  <div id="popup-overlay"
+       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[999999] backdrop-blur-sm">
+    <div id="popup-box"
+         class="bg-white rounded-2xl shadow-2xl p-10 max-w-md w-[90%] text-center space-y-5 animate-fadeIn relative z-[1000000]">
+      {% for message in messages %}
+        <p class="{% if message.tags == 'success' %}text-green-600{% elif message.tags == 'error' %}text-red-600{% else %}text-gray-700{% endif %} text-xl font-semibold">
+          {{ message }}
+        </p>
+      {% endfor %}
+      <button onclick="closePopup()"
+              class="mt-4 px-8 py-3 bg-gradient-to-r from-[#06038D] to-red-500 text-white rounded-lg font-semibold hover:opacity-90 transition">
+        OK
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Smooth fade-out
+    function closePopup() {
+      const overlay = document.getElementById('popup-overlay');
+      overlay.classList.add('opacity-0', 'pointer-events-none');
+      setTimeout(() => overlay.remove(), 300);
+    }
+
+    // Auto-close after 3 seconds
+    setTimeout(() => {
+      const overlay = document.getElementById('popup-overlay');
+      if (overlay) closePopup();
+    }, 3000);
+
+    // Scroll to correct section after reload (based on URL hash)
+    window.addEventListener("load", () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const section = document.querySelector(hash);
+        if (section) section.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+  </script>
+
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.35s ease-out forwards;
+    }
+  </style>
+{% endif %}
+
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="news">
+
+</div>
+
+
+
+
+
+<section id="latest-news" class="max-w-7xl mx-auto py-12 px-6 mt-10 text-black max-md:mt-0 max-md:py-2">
+  <h1 class="text-4xl font-bold text-left mb-10 border-b pb-3 border-gray-300 inline-block uppercase text-black">
+    Latest Updates
+  </h1>
+
+  {% if news_list %}
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+    <!-- Left Column -->
+    <div class="space-y-8">
+      {% for news in news_list|slice:":2" %}
+      <div>
+        <a href="{% url 'news_detail' news.id %}">
+          <h3 class="text-xl font-semibold leading-snug cursor-pointer underline">
+            {{ news.headline }}
+          </h3>
+          <p class="text-gray-600 mt-3 text-sm cursor-pointer">
+            {{ news.news|truncatewords:35 }}
+          </p>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Middle Column (Main Highlight) -->
+    {% if news_list|length > 2 %}
+      {% with middle_news=news_list.2 %}
+      <div>
+        <a href="{% url 'news_detail' middle_news.id %}">
+          {% if middle_news.image %}
+            <img src="{{ middle_news.image.url }}" alt="{{ middle_news.headline }}"
+                 class="rounded-lg mb-4 w-full h-64 object-cover">
+          {% endif %}
+          <h3 class="text-xl font-bold mb-2 underline">
+            {{ middle_news.headline }}
+          </h3>
+          <p class="text-sm text-gray-600 mb-4">
+            {{ middle_news.news|truncatewords:40 }}
+          </p>
+        </a>
+      </div>
+      {% endwith %}
+    {% endif %}
+
+    <!-- Right Column -->
+    <div class="space-y-8">
+      {% for news in news_list|slice:"3:6" %}
+      <div>
+        <a href="{% url 'news_detail' news.id %}">
+          {% if forloop.first and news.image %}
+            <img src="{{ news.image.url }}" alt="{{ news.headline }}"
+                 class="rounded-lg mb-3 h-54 w-full object-cover">
+          {% endif %}
+          <h3 class="text-lg font-semibold leading-snug underline">
+            {{ news.headline }}
+          </h3>
+          <p class="text-sm text-gray-600 mt-2">
+            {{ news.news|truncatewords:25 }}
+          </p>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+  {% else %}
+  <p class="text-gray-500 text-center text-lg">No news updates available.</p>
+  {% endif %}
+
+  <!-- Read More Button -->
+  <div class="flex justify-center mt-12 max-md:mb-12">
+    <a href="{% url 'news' %}">
+      <button class="bg-black text-white text-lg md:text-xl font-bold px-10 py-4 rounded-full shadow-lg hover:bg-gray-800 transition-all duration-300 flex items-center gap-3">
+        Read More
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M4 12h12.25L11 6.75l.66-.75l6.5 6.5l-6.5 6.5l-.66-.75L16.25 13H4z"/>
+        </svg>
+      </button>
+    </a>
+  </div>
+</section>
+
+<section id="contact-section"
+  class="relative flex flex-col md:flex-row items-stretch justify-between min-h-screen bg-cover bg-center"
+  style="background-image: url('./static/images/connect.jpg');"
+>
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black/40"></div>
+
+  <!-- LEFT SIDE -->
+  <div class="relative z-10 flex items-center justify-center w-full md:w-1/2 px-8 md:px-16 py-16">
+    <div>
+      <h1 class="text-4xl md:text-5xl font-semibold mb-4 text-white uppercase">Let's Connect</h1>
+      <p class="text-gray-300 text-lg max-w-md">
+        Have a question or suggestion about Tamil Nadu’s upcoming legislative assembly elections?
+        Reach out to us - we’d love to hear from you.
+      </p>
+    </div>
+  </div>
+
+  <!-- RIGHT SIDE (Centered Form) -->
+  <div class="relative z-10 flex items-center justify-center w-full md:w-1/2 bg-[#06038D]/50 backdrop-blur-sm rounded-tl-lg rounded-bl-lg px-8 md:px-16 py-16">
+    <form class="space-y-6 w-full max-w-md" method="POST" action="#contact-section">
+        {% csrf_token %}
+        <input type="hidden" name="form-type" value="contact">
+      <div>
+        <label for="name" class="block text-sm mb-2 uppercase tracking-wide text-gray-300">Name</label>
+        <input type="text" id="name" name="name" required
+          class="w-full px-4 py-2 bg-neutral-500 border border-neutral-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:border-amber-500" />
+      </div>
+
+      <div>
+        <label for="email" class="block text-sm mb-2 uppercase tracking-wide text-gray-300">Email</label>
+        <input type="email" id="email" name="email" required
+          class="w-full px-4 py-2 bg-neutral-500 border border-neutral-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:border-amber-500" />
+      </div>
+
+      <div>
+        <label for="message" class="block text-sm mb-2 uppercase tracking-wide text-gray-300">Message</label>
+        <textarea id="message" name="message" rows="4" required
+          class="w-full px-4 py-2 bg-neutral-500 border border-neutral-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:border-amber-500"></textarea>
+      </div>
+
+      <button type="submit"
+        class="px-6 py-3 bg-[red] hover:bg-red-500 hover:text-black rounded-md text-white  transition">
+        Send Message
+      </button>
+    </form>
+
+
+  </div>
+</section>
+
+
+  <footer class="bg-[#09121b] py-12 border-t border-neutral-800">
+    <div class="container mx-auto px-8 flex flex-col md:flex-row justify-between gap-8">
+
+      <div>
+        <p class="font-mono uppercase tracking-wider text-gray-200">TN Polls 2026</p>
+        <p class="mt-4 text-sm text-gray-400 max-w-5xl">Stay informed with the latest updates from the Tamil Nadu Legislative Assembly Elections.
+        Explore candidate profiles, polling information and news insights - all in one place.</p>
+      </div>
+
+<div class="flex flex-col md:flex-row gap-8 md:gap-16 text-gray-400">
+
+  <div>
+    <p class="uppercase text-xs text-gray-500 mb-2">[Quick Links]</p>
+    <ul class="space-y-1">
+      <li><a href="index.html#polling" class="hover:text-white transition">Candidates </a></li>
+      <li><a href="information.html" class="hover:text-white transition"> Informations</a></li>
+      <li><a href="blogs.html" class="hover:text-white transition"> News</a></li>
+
+
+    </ul>
+  </div>
+
+  <div>
+    <p class="uppercase text-xs text-gray-500 mb-2">[Latest Updates]</p>
+    <ul class="space-y-1">
+
+      <li><a href="blogs.html" class="hover:text-white transition">Insights</a></li>
+      <li><a href="blogs.html" class="hover:text-white transition"> Events</a></li>
+    </ul>
+  </div>
+</div>
+
+    </div>
+
+   <div class="text-center text-xs text-gray-500 mt-12">
+  Make Your Voice Count – Every Vote Shapes Tamil Nadu's Future!
+</div>
+
+  </footer>
+
+
+
+
+<script src="{% static 'js/script.js' %}"></script>
+
+</body>
+</html>
