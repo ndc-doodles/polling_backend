@@ -748,10 +748,20 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
         </form>
 
+
+
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
 {% if messages %}
   <!-- Popup Overlay -->
   <div id="popup-overlay"
-       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[999999] backdrop-blur-sm">
+       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[999] backdrop-blur-sm">
     <div id="popup-box"
          class="bg-white rounded-2xl shadow-2xl p-10 max-w-md w-[90%] text-center space-y-5 animate-fadeIn relative z-[1000000]">
       {% for message in messages %}
@@ -800,16 +810,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   </style>
 {% endif %}
-
-
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-
 
 
 
