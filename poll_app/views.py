@@ -17,6 +17,7 @@ from django.utils.html import escape
 from django.shortcuts import render, get_object_or_404
 import wikipediaapi
 import requests
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 def index(request):
     candidates = Candidate.objects.all()
@@ -293,9 +294,11 @@ def news_detail(request, news_id):
         'related_news': related_news,
     })
 
+IMAGE_CACHE = {}
 
 def overview(request):
     try:
+        # Initialize Wikipedia API
         wiki = wikipediaapi.Wikipedia(
             language='en',
             user_agent='CybeselectApp/1.0 (http://127.0.0.1:8000/; cybeselect@gmail.com)'
@@ -303,6 +306,7 @@ def overview(request):
 
         page = wiki.page("Tamil Nadu")
 
+        # Recursive collector for subsections
         def collect_sections(sections, result):
             for section in sections:
                 if section.text.strip():
@@ -310,79 +314,68 @@ def overview(request):
                         "id": section.title.lower().replace(" ", "_"),
                         "title": section.title,
                         "summary": section.text[:2000] + ("..." if len(section.text) > 2000 else ""),
-                        "image": None
                     })
                 collect_sections(section.sections, result)
             return result
 
-        # Start data list with Introduction
         data = []
+
+        # Add introduction
         if page.summary.strip():
             data.append({
                 "id": "introduction",
                 "title": "Introduction",
                 "summary": page.summary[:2000] + ("..." if len(page.summary) > 2000 else ""),
-                "image": None
             })
 
-        # Add all sections
+        # Add all other sections
         data.extend(collect_sections(page.sections, []))
 
-        # ✅ Fetch images using Wikimedia API (smart topic matching)
-        def get_image_url(title):
-            try:
-                search_term = f"Tamil Nadu {title}"
-                api_url = (
-                    "https://en.wikipedia.org/w/api.php"
-                    f"?action=query&titles={search_term.replace(' ', '%20')}"
-                    "&prop=pageimages&pithumbsize=800&format=json"
-                )
-                headers = {
-                    "User-Agent": "CybeselectApp/1.0 (http://127.0.0.1:8000/; cybeselect@gmail.com)"
-                }
-                res = requests.get(api_url, headers=headers, timeout=5)
-                res.raise_for_status()
-                info = res.json()
-                pages = info.get("query", {}).get("pages", {})
-                for _, page_data in pages.items():
-                    if "thumbnail" in page_data:
-                        return page_data["thumbnail"]["source"]
-            except Exception:
-                return None
-            return None
+        # 🎯 Image map for contextual matching
+        image_map = {
+            "introduction": "https://upload.wikimedia.org/wikipedia/commons/4/4c/TamilNadu_Collage.png",
+            "history": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Madurai_Meenakshi_Amman_Temple_gopurams.jpg",
+            "geography": "https://upload.wikimedia.org/wikipedia/commons/1/13/Tamil_Nadu_in_India_%28highlighted%29.svg",
+            "climate": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Kanyakumari_sunset.jpg",
+            "flora": "https://upload.wikimedia.org/wikipedia/commons/0/09/Western_Ghats_Tamil_Nadu.jpg",
+            "fauna": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Mudumalai_Tiger_Reserve_elephants.jpg",
+            "culture": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Brihadisvara_Temple%2C_Thanjavur.jpg",
+            "economy": "https://upload.wikimedia.org/wikipedia/commons/f/f7/Chennai_IT_Park.jpg",
+            "politics": "https://upload.wikimedia.org/wikipedia/commons/f/fd/Tamil_Nadu_Legislative_Assembly.jpg",
+            "administration": "https://upload.wikimedia.org/wikipedia/commons/f/fd/Tamil_Nadu_Legislative_Assembly.jpg",
+            "transport": "https://upload.wikimedia.org/wikipedia/commons/d/d2/Chennai_Central.jpg",
+            "education": "https://upload.wikimedia.org/wikipedia/commons/4/4c/IIT_Madras_Campus.jpg",
+            "demographics": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Chennai_Skyline.jpg",
+        }
 
-        # 🎨 Assign topic-specific images (with backups)
-        fallback_images = [
-            "https://upload.wikimedia.org/wikipedia/commons/4/4c/TamilNadu_Collage.png",
-            "https://upload.wikimedia.org/wikipedia/commons/1/13/Tamil_Nadu_in_India_%28highlighted%29.svg",
-            "https://upload.wikimedia.org/wikipedia/commons/d/d2/Chennai_Central.jpg",
-            "https://upload.wikimedia.org/wikipedia/commons/5/5f/Brihadisvara_Temple%2C_Thanjavur.jpg",
-            "https://upload.wikimedia.org/wikipedia/commons/b/b9/Kanyakumari_sunset.jpg",
-            "https://upload.wikimedia.org/wikipedia/commons/2/2f/Madurai_Meenakshi_Amman_Temple_gopurams.jpg",
-        ]
+        # 🧠 Match sections with image_map (case-insensitive containment)
+        for section in data:
+            title_key = section["title"].lower()
+            matched_image = None
+            for key, url in image_map.items():
+                if key in title_key:
+                    matched_image = url
+                    break
+            section["image"] = matched_image
 
-        for i, section in enumerate(data):
-            img = get_image_url(section["title"])
-            section["image"] = img or fallback_images[i % len(fallback_images)]
-
-        # Remove sections that have no summary text
+        # Remove empty summaries
         data = [d for d in data if d["summary"].strip()]
+
+        # 🪶 Debug: check mapping in console
+        print("\n=== IMAGE DEBUG ===")
+        for s in data:
+            print(f"{s['title']} → {s.get('image')}")
+        print("===================\n")
 
     except Exception as e:
         data = [{
             "id": "error",
             "title": "Error",
-            "summary": f"Unable to fetch Wikipedia data. ({e})",
-            "image": "https://upload.wikimedia.org/wikipedia/commons/4/4c/TamilNadu_Collage.png"
+            "summary": f"Unable to load Tamil Nadu information. ({e})",
+            "image": None
         }]
 
     return render(request, "information.html", {"data": data})
-
-
-
-
-
-
 
 
 

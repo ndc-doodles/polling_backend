@@ -68,7 +68,8 @@
 
 <div class="flex flex-col md:flex-row min-h-screen text-black">
   <!-- Sidebar -->
-  <aside id="sidebar" class="fixed md:relative top-0 left-0 w-64 bg-white border-r border-gray-200 p-6 min-h-screen overflow-y-auto transform -translate-x-full md:translate-x-0 transition-transform duration-300 pt-20">
+  <aside id="sidebar"
+         class="fixed md:relative top-0 left-0 w-64 bg-white border-r border-gray-200 p-6 min-h-screen overflow-y-auto transform -translate-x-full md:translate-x-0 transition-transform duration-300 pt-20">
     <h2 class="text-lg font-semibold mb-4">Contents</h2>
     <nav>
       <ul class="space-y-2 text-sm">
@@ -84,17 +85,23 @@
   </aside>
 
   <!-- Main -->
-  <main class="flex-1 p-6 md:p-10 flex flex-col space-y-8 ml-0 max-md:mt-20">
+  <main class="flex-1 p-6 md:p-10 flex flex-col space-y-8 ml-0 mt-10 max-md:mt-20 bg-gray-50">
     {% for section in data %}
-      <section id="{{ section.id }}" class="section-card {% if not forloop.first %}hidden{% endif %} w-full max-w-4xl p-6 md:p-8 bg-white rounded-lg shadow-sm">
-        <h2 class="text-3xl font-bold mb-3 pt-6">{{ section.title }}</h2>
+      <section id="{{ section.id }}"
+               class="section-card {% if not forloop.first %}hidden{% endif %} w-full max-w-4xl mx-auto p-6 md:p-8 bg-white rounded-xl shadow-md">
+        <h2 class="text-3xl font-bold mb-4 text-gray-800">{{ section.title }}</h2>
 
-        {% if section.image %}
-  <img src="{{ section.image }}" alt="{{ section.title }}" class="w-full max-w-2xl rounded-lg mb-4">
+       {% if section.image %}
+  <div class="flex justify-center mb-6">
+    <img src="{{ section.image }}"
+         alt="{{ section.title }}"
+         onerror="this.style.display='none';"
+         class="max-w-full w-auto h-auto rounded-lg border border-gray-200 shadow-md">
+  </div>
 {% endif %}
 
 
-        <p class="leading-relaxed mb-4 text-gray-700">{{ section.summary }}</p>
+        <p class="leading-relaxed text-gray-700">{{ section.summary }}</p>
       </section>
     {% endfor %}
   </main>
@@ -103,11 +110,13 @@
 <script>
   const buttons = document.querySelectorAll('.section-btn');
   const sections = document.querySelectorAll('.section-card');
+
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
       const target = btn.getAttribute('data-target');
       sections.forEach(sec => sec.classList.add('hidden'));
       document.getElementById(target).classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });
 </script>
