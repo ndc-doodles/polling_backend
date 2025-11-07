@@ -280,71 +280,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
 <footer class="bg-[#09121b] py-12 border-t border-neutral-800">
-  <div class="container mx-auto px-8 flex flex-col md:flex-row justify-between gap-8">
+    <div class="container mx-auto px-8 flex flex-col md:flex-row justify-between gap-8">
 
-    <!-- LEFT SECTION -->
-    <div>
-      <p data-ta="தமிழ்நாடு தேர்தல்கள் 2026"
-         data-en="TN Polls 2026"
-         class="font-mono uppercase tracking-wider text-gray-200"></p>
-
-      <p data-ta="தமிழ்நாடு சட்டமன்றத் தேர்தல் குறித்த சமீபத்திய புதுப்பிப்புகளை அறிந்து கொள்ளுங்கள். வேட்பாளர் விவரங்கள், வாக்குப்பதிவு தகவல்கள் மற்றும் செய்தி பார்வைகள் — அனைத்தும் ஒரே இடத்தில்."
-         data-en="Stay informed with the latest updates from the Tamil Nadu Legislative Assembly Elections. Explore candidate profiles, polling information, and news insights — all in one place."
-         class="mt-4 text-sm text-gray-400 max-w-5xl"></p>
-    </div>
-
-    <!-- RIGHT SECTION -->
-    <div class="flex flex-col md:flex-row gap-8 md:gap-16 text-gray-400">
-
-      <!-- Quick Links -->
       <div>
-        <p data-ta="[விரைவு இணைப்புகள்]"
-           data-en="[Quick Links]"
-           class="uppercase text-xs text-gray-500 mb-2"></p>
-        <ul class="space-y-1">
-          <li><a href="index.html#polling"
-                 data-ta="வேட்பாளர்கள்"
-                 data-en="Candidates"
-                 class="hover:text-white transition"></a></li>
-          <li><a href="{% url 'overview' %}"
-                 data-ta="தகவல்கள்"
-                 data-en="Informations"
-                 class="hover:text-white transition"></a></li>
-          <li><a href="{% url 'news' %}" 
-                 data-ta="செய்திகள்"
-                 data-en="News"
-                 class="hover:text-white transition"></a></li>
-        </ul>
+        <p class="font-mono uppercase tracking-wider text-gray-200">TN Polls 2026</p>
+        <p class="mt-4 text-sm text-gray-400 max-w-5xl">Stay informed with the latest updates from the Tamil Nadu Legislative Assembly Elections.
+        Explore candidate profiles, polling information and news insights - all in one place.</p>
       </div>
 
-      <!-- Latest Updates -->
-      <div>
-        <p data-ta="[சமீபத்திய புதுப்பிப்புகள்]"
-           data-en="[Latest Updates]"
-           class="uppercase text-xs text-gray-500 mb-2"></p>
-        <ul class="space-y-1">
-          <li><a href="{% url 'news' %}" 
-                 data-ta="ஆழ்ந்த பார்வைகள்"
-                 data-en="Insights"
-                 class="hover:text-white transition"></a></li>
-          <li><a href="{% url 'news' %}" 
-                 data-ta="நிகழ்வுகள்"
-                 data-en="Events"
-                 class="hover:text-white transition"></a></li>
-        </ul>
-      </div>
+<div class="flex flex-col md:flex-row gap-8 md:gap-16 text-gray-400">
+
+  <div>
+    <p class="uppercase text-xs text-gray-500 mb-2">[Quick Links]</p>
+    <ul class="space-y-1">
+      <li><a href="index.html#polling" class="hover:text-white transition">Candidates </a></li>
+      <li><a href="information.html" class="hover:text-white transition"> Informations</a></li>
+      <li><a href="blogs.html" class="hover:text-white transition"> News</a></li>
+
+
+    </ul>
+  </div>
+
+  <div>
+    <p class="uppercase text-xs text-gray-500 mb-2">[Latest Updates]</p>
+    <ul class="space-y-1">
+
+      <li><a href="blogs.html" class="hover:text-white transition">Insights</a></li>
+      <li><a href="blogs.html" class="hover:text-white transition"> Events</a></li>
+    </ul>
+  </div>
+</div>
 
     </div>
-  </div>
 
-  <!-- BOTTOM TEXT -->
-  <div class="text-center text-xs text-gray-500 mt-12"
-       data-ta="உங்கள் குரலை வெளிப்படுத்துங்கள் – ஒவ்வொரு வாக்கும் தமிழ்நாட்டின் எதிர்காலத்தை உருவாக்குகிறது!"
-       data-en="Make Your Voice Count – Every Vote Shapes Tamil Nadu's Future!">
-  </div>
-</footer>   
+   <div class="text-center text-xs text-gray-500 mt-12">
+  Make Your Voice Count – Every Vote Shapes Tamil Nadu's Future!
+</div>
+
+  </footer>
 
 
 
