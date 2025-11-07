@@ -13,25 +13,26 @@
 
 
 
+
 <!-- Navbar -->
-<nav id="navbar" class="fixed w-full top-0 z-50 bg-[#06038D] transition-colors duration-300">
+<nav id="navbar" class="fixed w-full top-0 z-50 bg-[#06038D] transition-colors duration-300 z-[9999]">
   <div class="px-5 sm:px-10 md:px-20 flex justify-between items-center h-16">
-    <a href="index.html" class="text-2xl font-bold text-white">TN Polls 2026</a>
+    <a href="{% url 'index' %}" class="text-2xl font-bold text-white">TN Polls 2026</a>
 
     <!-- Desktop Menu -->
     <div class="hidden md:flex items-center space-x-6">
-      <a href="index.html" class="hover:text-gray-200 transition">Home</a>
-      <a href="information.html" class="hover:text-gray-200 transition">Overview</a>
-      <a href="blogs.html" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition">Blogs</a>
+      <a href="{% url 'index' %}" class="hover:text-gray-200 transition text-white">Home</a>
+      <a href="{% url 'overview' %}" class="hover:text-gray-200 transition text-white">Overview</a>
+      <a href="{% url 'news' %}" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition">News</a>
       <div class="flex items-center space-x-2">
-  <span id="lang-label" class="text-white font-semibold text-sm">ENG</span>
-  <label class="relative inline-flex items-center cursor-pointer">
-    <input type="checkbox" class="sr-only peer" id="lang-toggle">
-    <!-- Track -->
-    <div class="w-10 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-500 transition-colors"></div>
-    <!-- Slider -->
-    <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-md peer-checked:translate-x-6 transition-transform"></div>
-  </label>
+  <div class="flex items-center space-x-2">
+        <span id="lang-label" class="text-white font-semibold text-sm">தமிழ்</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" class="sr-only peer" id="lang-toggle">
+          <div class="w-10 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-500 transition-colors"></div>
+          <div class="absolute left-[2px] top-[2px] w-5 h-5 bg-white rounded-full shadow-md peer-checked:translate-x-[18px] transition-transform duration-300"></div>
+        </label>
+      </div>
 </div>
     </div>
 
@@ -48,10 +49,10 @@
   <div id="overlay" class="fixed inset-0 bg-black/50 hidden z-40"></div>
 
   <!-- Mobile Sidebar Menu -->
-  <div id="mobile-menu" class="fixed top-0 right-[-70%] h-full w-[70%]  bg-[#06038D]/95  text-white shadow-lg transition-all duration-500 z-50 flex flex-col px-6 py-8 space-y-4">
-    <a href="index.html" class="hover:text-red-500 transition">Home</a>
-    <a href="information.html" class="hover:text-red-500 transition">Overview</a>
-    <a href="blogs.html" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition">Blogs</a>
+  <div id="mobile-menu" class="fixed top-0 right-[-70%] h-full w-[70%] bg-[#06038D]/95 text-white shadow-lg transition-all duration-500 z-50 flex flex-col px-6 py-8 space-y-4">
+    <a href="{% url 'index' %}" class="hover:text-red-500 transition">Home</a>
+    <a href="{% url 'overview' %}" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition">Overview</a>
+    <a href="{% url 'news' %}" class="hover:text-red-500 transition">News</a>
    <div class="flex items-center space-x-2 mt-6">
   <span id="mobile-lang-label" class="text-white font-semibold text-sm">ENG</span>
   <label class="relative inline-flex items-center cursor-pointer">
@@ -62,8 +63,11 @@
     <div class="absolute left-[2px] top-[2px] w-5 h-5 bg-white rounded-full shadow-md peer-checked:translate-x-[18px] transition-transform duration-300"></div>
   </label>
 </div>
+
   </div>
 </nav>
+
+
 
  
  <!-- Container -->

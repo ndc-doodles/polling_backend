@@ -101,50 +101,39 @@ def get_constituencies(request, district_id):
 def filter_candidates(request):
     district_id = request.GET.get('district')
     constituency_id = request.GET.get('constituency')
-    search = request.GET.get('search', '').strip().lower()
+    search = request.GET.get('search', '').strip()
 
     candidates = Candidate.objects.all()
 
-    # 🔹 Filter by district dropdown
+    # Filter by district
     if district_id:
-        try:
-            district_name = District.objects.get(id=district_id).name
-            candidates = candidates.filter(district__iexact=district_name)
-        except District.DoesNotExist:
-            pass
+        candidates = candidates.filter(district_id=district_id)
 
-    # 🔹 Filter by constituency dropdown
+    # Filter by constituency
     if constituency_id:
-        try:
-            constituency_name = Constituency.objects.get(id=constituency_id).name
-            candidates = candidates.filter(constituency__iexact=constituency_name)
-        except Constituency.DoesNotExist:
-            pass
+        candidates = candidates.filter(constituency_id=constituency_id)
 
-    # 🔹 Search filter: match candidate name, party name, district, or constituency
+    # Search
     if search:
         candidates = candidates.filter(
             Q(name__icontains=search) |
             Q(party__name__icontains=search) |
-            Q(district__icontains=search) |
-            Q(constituency__icontains=search)
+            Q(district__name__icontains=search) |
+            Q(constituency__name__icontains=search)
         )
 
-    # 🔹 Serialize candidates for the frontend
-    data = []
-    for cand in candidates:
-        data.append({
-            'id': cand.id,
-            'name': cand.name,
-            'district': cand.district,
-            'constituency': cand.constituency,
-            'party': cand.party.name,
-            'party_image': cand.party.image.url if cand.party.image else '',
-            'image': cand.image.url if cand.image else '',
-        })
+    # Serialize
+    data = [{
+        "id": c.id,
+        "name": c.name,
+        "district": c.district.name,
+        "constituency": c.constituency.name,
+        "party": c.party.name,
+        "party_image": c.party.image.url if c.party.image else "",
+        "image": c.image.url if c.image else ""
+    } for c in candidates]
 
-    return JsonResponse({'candidates': data})
-
+    return JsonResponse({"candidates": data})
 
 # Load .env variables
 load_dotenv()
@@ -240,16 +229,21 @@ def submit_vote(request):
 
 
 def news(request):
-    # Slide news (for story slider)
+    # 🔹 Fetch categorized news
     slide_news = News.objects.filter(slide=True).order_by('category', '-created')
-
-    # Other news (normal list)
-    other_news = News.objects.filter(slide=False).order_by('-created')
     top_rated_news = News.objects.filter(top_rated=True).order_by('-created')
     latest_news = News.objects.filter(latest=True).order_by('-created')
     upcoming_news = News.objects.filter(upcoming=True).order_by('-created')
 
-    # Group and randomize slide news
+    # 🔹 Exclude Top Rated, Slide, Latest, Upcoming
+    other_news = News.objects.filter(
+        slide=False,
+        top_rated=False,
+        latest=False,
+        upcoming=False
+    ).order_by('-created')
+
+    # 🔹 Group slide news by category and randomize
     grouped = {}
     for category, items in groupby(slide_news, key=lambda n: n.category):
         grouped[category] = list(items)
@@ -258,7 +252,6 @@ def news(request):
 
     selected_news = []
     seen_ids = set()
-
     for cat in random_categories:
         news_items = grouped.get(cat, [])
         random.shuffle(news_items)
@@ -269,18 +262,18 @@ def news(request):
 
     random.shuffle(selected_news)
 
-    # ✅ Get the last 3 news for the small “other news” sidebar or section
+    # 🔹 Last 3 recent news
     last_three_news = News.objects.order_by('-created')[:3]
 
-    # Render the template
     return render(request, 'news.html', {
-        'grouped_news': selected_news,    # For slider
-        'other_news': other_news,         # For full list
-        'top_rated_news': top_rated_news, # For sidebar
-        'latest_news': latest_news,       # For latest section
-        'upcoming_news': upcoming_news,   # For upcoming section
-        'last_three_news': last_three_news,  # ✅ New context variable
+        'grouped_news': selected_news,     # For slider
+        'other_news': other_news,          # For list excluding top/latest/upcoming
+        'top_rated_news': top_rated_news,  # For sidebar
+        'latest_news': latest_news,        # For latest section
+        'upcoming_news': upcoming_news,    # For upcoming section
+        'last_three_news': last_three_news,
     })
+
 
 def news_detail(request, news_id):
     # Fetch the clicked news item
@@ -289,7 +282,7 @@ def news_detail(request, news_id):
     # Fetch 3 latest other news (for sidebar)
     related_news = News.objects.exclude(id=news_id).order_by('-created')[:3]
 
-    return render(request, 'blog_detail.html', {
+    return render(request, 'news_detail.html', {
         'news_item': news_item,
         'related_news': related_news,
     })

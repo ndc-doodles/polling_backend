@@ -35,17 +35,17 @@ class Constituency(models.Model):
 
 class Candidate(models.Model):
     name = models.CharField(max_length=100)
-    district = models.CharField(max_length=100)
-    constituency = models.CharField(max_length=100)
-    party = models.ForeignKey('Party', on_delete=models.CASCADE, related_name='candidates')
-    image = CloudinaryField('candidate_image')
+    district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='candidates')
+    constituency = models.ForeignKey(Constituency, on_delete=models.CASCADE, related_name='candidates')
+    party = models.ForeignKey(Party, on_delete=models.CASCADE, related_name='candidates')
+    image = CloudinaryField('candidate_image', blank=True, null=True)
 
     def __str__(self):
         return f"{self.name} ({self.party.name})"
 
     @property
     def party_image(self):
-        return self.party.image.url  # ✅ easy access
+        return self.party.image.url if self.party.image else None
 
 
 class News(models.Model):

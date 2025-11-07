@@ -15,14 +15,14 @@
 
 <nav id="navbar" class="fixed w-full top-0 z-50 bg-transparent backdrop-blur-md border-b border-white/30 transition-colors duration-300">
   <div class="px-6 md:px-20 flex justify-between items-center h-16">
-    <a href="index.html" class="text-2xl font-bold text-white">TN Polls 2026</a>
+    <a href="{% url 'index' %}" class="text-2xl font-bold text-white">TN Polls 2026</a>
 
     <div class="hidden md:flex items-center space-x-6">
-      <a href="index.html" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition">
+      <a href="{% url 'index' %}" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition">
         Home
       </a>
-      <a href="information.html" class="text-white hover:text-gray-200 transition">Overview</a>
-      <a href="blogs.html" class="text-white hover:text-gray-200 transition">Blogs</a>
+      <a href="{% url 'overview' %}" class="text-white hover:text-gray-200 transition">Overview</a>
+      <a href="{% url 'news' %}" class="text-white hover:text-gray-200 transition">News</a>
 
       <div class="flex items-center space-x-2">
         <span id="lang-label" class="text-white font-semibold text-sm">TAMIL</span>
@@ -45,9 +45,9 @@
   <div id="overlay" class="fixed inset-0 bg-black/50 hidden z-50"></div>
 
   <div id="mobile-menu" class="fixed top-0 right-[-70%] h-screen w-[70%] bg-[#06038D]/95 text-white shadow-lg transition-all duration-500 z-[9999] flex flex-col px-6 py-8 space-y-4">
-    <a href="index.html" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition">Home</a>
-    <a href="information.html" class="hover:text-red-500 transition">Overview</a>
-    <a href="blogs.html" class="hover:text-red-500 transition">Blogs</a>
+    <a href="{% url 'index' %}" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition">Home</a>
+    <a href="{% url 'overview' %}" class="hover:text-red-500 transition">Overview</a>
+    <a href="{% url 'news' %}" class="hover:text-red-500 transition">News</a>
 
     <div class="flex items-center space-x-2 mt-6">
       <span id="mobile-lang-label" class="text-white font-semibold text-sm">TAMIL</span>
@@ -878,7 +878,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     <!-- Right Column -->
     <div class="space-y-8">
-      {% for news in news_list|slice:"3:6" %}
+      {% for news in news_list|slice:"3:5" %}
       <div>
         <a href="{% url 'news_detail' news.id %}">
           {% if forloop.first and news.image %}
