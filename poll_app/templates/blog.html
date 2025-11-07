@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tamil Nadu Polling 2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="./static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+</head>
+
+<body class="bg-gray-50 text-white">
+
+
+<!-- Navbar -->
+<nav id="navbar" class="fixed w-full top-0 z-[9999] bg-[#06038D] transition-colors duration-300">
+  <div class="px-5 sm:px-10 md:px-20 flex justify-between items-center h-16">
+    <a href="index.html" class="text-2xl font-bold text-white" data-en="TN Polls 2026" data-ta="டி.என். தேர்தல் 2026">டி.என். தேர்தல் 2026</a>
+
+    <!-- Desktop Menu -->
+    <div class="hidden md:flex items-center space-x-6">
+      <a href="index.html" class="hover:text-gray-200 transition" data-en="Home" data-ta="முகப்பு">முகப்பு</a>
+      <a href="information.html" class="hover:text-gray-200 transition" data-en="Overview" data-ta="மேலோட்டம்">மேலோட்டம்</a>
+      <a href="news.html" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition"
+   data-en="News" data-ta="செய்திகள்">செய்திகள்</a>
+
+<a href="blog.html" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition"
+   data-en="Blogs" data-ta="வலைப்பதிவுகள்">வலைப்பதிவுகள்</a>
+
+
+      <div class="flex items-center space-x-2">
+        <span id="lang-label" class="text-white font-semibold text-sm">தமிழ்</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" class="sr-only peer" id="lang-toggle">
+          <div class="w-10 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-500 transition-colors"></div>
+          <div class="absolute left-[2px] top-[2px] w-5 h-5 bg-white rounded-full shadow-md peer-checked:translate-x-[18px] transition-transform duration-300"></div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Overlay -->
+  <div id="overlay" class="fixed inset-0 bg-black/50 hidden z-40"></div>
+
+  <!-- Mobile Sidebar Menu -->
+  <div id="mobile-menu" class="fixed top-0 right-[-70%] h-full w-[70%] bg-[#06038D]/95 text-white shadow-lg transition-all duration-500 z-50 flex flex-col px-6 py-8 space-y-4">
+    <a href="index.html" class="hover:text-red-500 transition" data-en="Home" data-ta="முகப்பு">முகப்பு</a>
+    <a href="information.html" class="hover:text-red-500 transition" data-en="Overview" data-ta="மேலோட்டம்">மேலோட்டம்</a>
+   <a href="news.html" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition"
+   data-en="News" data-ta="செய்திகள்">செய்திகள்</a>
+
+<a href="blog.html" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition"
+   data-en="Blogs" data-ta="வலைப்பதிவுகள்">வலைப்பதிவுகள்</a>
+
+    <div class="flex items-center space-x-2 mt-6">
+      <span id="mobile-lang-label" class="text-white font-semibold text-sm">தமிழ்</span>
+      <label class="relative inline-flex items-center cursor-pointer">
+        <input type="checkbox" class="sr-only peer" id="mobile-lang-toggle">
+        <div class="w-10 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-500 transition-colors"></div>
+        <div class="absolute left-[2px] top-[2px] w-5 h-5 bg-white rounded-full shadow-md peer-checked:translate-x-[18px] transition-transform duration-300"></div>
+      </label>
+    </div>
+  </div>
+</nav>
+
+<div class="max-w-7xl mx-auto px-6 py-16 text-black mt-10">
+
+    <!-- Top section -->
+    <h1 class="text-4xl font-bold text-left mb-10 border-b pb-3 border-gray-300 inline-block uppercase text-black">
+      Tamil Nadu Politics
+    </h1>
+    <p class="text-gray-600 mb-12 max-w-2xl">
+      Stay informed about Tamil Nadu’s dynamic political landscape. From party announcements and elections to leadership
+      updates and key reforms shaping the state’s future.
+    </p>
+
+    <!-- Filters -->
+    <div class="flex items-center justify-between flex-wrap gap-4 mb-12">
+      <div class="flex gap-3 flex-wrap">
+        <button class="filter-btn px-4 py-2 rounded-full bg-black text-white text-sm" data-category="all">All Articles</button>
+        <button class="filter-btn px-4 py-2 rounded-full bg-white border text-sm" data-category="elections">Elections</button>
+        <button class="filter-btn px-4 py-2 rounded-full bg-white border text-sm" data-category="party-updates">Party Updates</button>
+        <button class="filter-btn px-4 py-2 rounded-full bg-white border text-sm" data-category="leaders">Leaders</button>
+        <button class="filter-btn px-4 py-2 rounded-full bg-white border text-sm" data-category="reforms">Reforms</button>
+      </div>
+    </div>
+
+    <!-- Cards Grid -->
+    <div id="newsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Card 1 -->
+      <div class="news-card bg-white rounded-xl shadow-sm border hover:shadow-md transition overflow-hidden" 
+           data-category="elections"
+           data-title="Vijay announced as CM candidate for TVK"
+           data-date="Jul 04, 2025"
+           data-category-name="Elections"
+           data-img="./static/images/n3.jpg"
+           data-content="Actor Vijay officially declared as the Chief Ministerial candidate of Tamil Nadu Vetri Kazhagam for the 2026 Assembly elections, confirming no alliance with BJP or DMK.|His announcement gathered massive public attention as he promised youth-centric governance with a focus on transparency and employment.|Political analysts view this as a major shift that could redefine Tamil Nadu’s political balance in 2026.">
+        <img src="./static/images/n3.jpg" class="w-full h-56 object-cover" alt="Vijay TVK announcement" />
+        <div class="p-5">
+          <p class="text-red-700 text-sm font-medium">Elections • Jul 04, 2025</p>
+          <h2 class="text-lg font-semibold mt-2">Vijay announced as CM candidate for TVK</h2>
+          <p class="text-gray-600 text-sm mt-2">
+            Actor Vijay officially declared as the Chief Ministerial candidate of Tamil Nadu Vetri Kazhagam for the 2026 Assembly elections, confirming no alliance with BJP or DMK.
+          </p>
+          <button class="read-btn mt-4 text-red-700 flex items-center gap-2 font-medium">
+            Read More <i class="ri-arrow-right-line"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="news-card bg-white rounded-xl shadow-sm border hover:shadow-md transition overflow-hidden"
+           data-category="party-updates"
+           data-title="DMK and AIADMK prepare for 2026 elections"
+           data-date="Jun 20, 2025"
+           data-category-name="Party Updates"
+           data-img="https://images.unsplash.com/photo-1568658176307-8a7e6d882c03"
+           data-content="Both major Dravidian parties are gearing up for the upcoming elections, announcing candidate lists, alliances, and manifestos.|DMK focuses on welfare continuity while AIADMK aims to reclaim its strongholds with new leadership strategies.|Analysts expect a tight contest across several urban constituencies.">
+        <img src="https://images.unsplash.com/photo-1568658176307-8a7e6d882c03" class="w-full h-56 object-cover" alt="Political rally" />
+        <div class="p-5">
+          <p class="text-red-700 text-sm font-medium">Party Updates • Jun 20, 2025</p>
+          <h2 class="text-lg font-semibold mt-2">DMK and AIADMK prepare for 2026 elections</h2>
+          <p class="text-gray-600 text-sm mt-2">
+            Both major Dravidian parties are gearing up for the upcoming elections, announcing candidate lists, alliances, and development-focused manifestos.
+          </p>
+          <button class="read-btn mt-4 text-red-700 flex items-center gap-2 font-medium">
+            Read More <i class="ri-arrow-right-line"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="news-card bg-white rounded-xl shadow-sm border hover:shadow-md transition overflow-hidden"
+           data-category="reforms"
+           data-title="Tamil Nadu launches youth employment mission"
+           data-date="May 15, 2025"
+           data-category-name="Reforms"
+           data-img="https://images.unsplash.com/photo-1578926287940-53c76a4f0cc4"
+           data-content="The government introduced a mission aimed at generating one million jobs for youth across districts by 2026.|Training centres and digital upskilling programs are being launched under this initiative.|The policy focuses on integrating education with employment for long-term growth.">
+        <img src="https://images.unsplash.com/photo-1578926287940-53c76a4f0cc4" class="w-full h-56 object-cover" alt="Chennai secretariat" />
+        <div class="p-5">
+          <p class="text-red-700 text-sm font-medium">Reforms • May 15, 2025</p>
+          <h2 class="text-lg font-semibold mt-2">Tamil Nadu launches youth employment mission</h2>
+          <p class="text-gray-600 text-sm mt-2">
+            The government introduced a new mission aimed at creating over one million job opportunities for youth across districts by 2026.
+          </p>
+          <button class="read-btn mt-4 text-red-700 flex items-center gap-2 font-medium">
+            Read More <i class="ri-arrow-right-line"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="newsModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-[9999]">
+    <div class="bg-white max-w-2xl w-full rounded-lg relative shadow-lg overflow-hidden">
+      <!-- Close Button -->
+      <button id="closeModal" class="absolute top-4 right-4 text-gray-700 hover:text-black text-2xl">
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><path fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2.3" d="m8.464 15.535l7.072-7.07m-7.072 0l7.072 7.07"/></svg>
+      </button>
+
+      <img id="modalImg" src="" class="w-full h-[400px] object-cover" />
+      <div class="p-6">
+        <p id="modalMeta" class="text-red-700 text-sm font-medium"></p>
+        <h2 id="modalTitle" class="text-2xl font-bold mt-2 mb-4"></h2>
+        <div id="modalContent" class="space-y-4 text-gray-700 text-sm leading-relaxed"></div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+<footer class="bg-[#09121b] py-12 border-t border-neutral-800">
+  <div class="container mx-auto px-8 flex flex-col md:flex-row justify-between gap-8">
+
+    <!-- LEFT SECTION -->
+    <div>
+      <p data-ta="தமிழ்நாடு தேர்தல்கள் 2026"
+         data-en="TN Polls 2026"
+         class="font-mono uppercase tracking-wider text-gray-200"></p>
+
+      <p data-ta="தமிழ்நாடு சட்டமன்றத் தேர்தல் குறித்த சமீபத்திய புதுப்பிப்புகளை அறிந்து கொள்ளுங்கள். வேட்பாளர் விவரங்கள், வாக்குப்பதிவு தகவல்கள் மற்றும் செய்தி பார்வைகள் — அனைத்தும் ஒரே இடத்தில்."
+         data-en="Stay informed with the latest updates from the Tamil Nadu Legislative Assembly Elections. Explore candidate profiles, polling information, and news insights — all in one place."
+         class="mt-4 text-sm text-gray-400 max-w-5xl"></p>
+    </div>
+
+    <!-- RIGHT SECTION -->
+    <div class="flex flex-col md:flex-row gap-8 md:gap-16 text-gray-400">
+
+      <!-- Quick Links -->
+      <div>
+        <p data-ta="[விரைவு இணைப்புகள்]"
+           data-en="[Quick Links]"
+           class="uppercase text-xs text-gray-500 mb-2"></p>
+        <ul class="space-y-1">
+          <li><a href="index.html#polling"
+                 data-ta="வேட்பாளர்கள்"
+                 data-en="Candidates"
+                 class="hover:text-white transition"></a></li>
+          <li><a href="information.html"
+                 data-ta="தகவல்கள்"
+                 data-en="Informations"
+                 class="hover:text-white transition"></a></li>
+          <li><a href="news.html"
+                 data-ta="செய்திகள்"
+                 data-en="News"
+                 class="hover:text-white transition"></a></li>
+        </ul>
+      </div>
+
+      <!-- Latest Updates -->
+      <div>
+        <p data-ta="[சமீபத்திய புதுப்பிப்புகள்]"
+           data-en="[Latest Updates]"
+           class="uppercase text-xs text-gray-500 mb-2"></p>
+        <ul class="space-y-1">
+          <li><a href="news.html"
+                 data-ta="ஆழ்ந்த பார்வைகள்"
+                 data-en="Insights"
+                 class="hover:text-white transition"></a></li>
+          <li><a href="news.html"
+                 data-ta="நிகழ்வுகள்"
+                 data-en="Events"
+                 class="hover:text-white transition"></a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BOTTOM TEXT -->
+  <div class="text-center text-xs text-gray-500 mt-12"
+       data-ta="உங்கள் குரலை வெளிப்படுத்துங்கள் – ஒவ்வொரு வாக்கும் தமிழ்நாட்டின் எதிர்காலத்தை உருவாக்குகிறது!"
+       data-en="Make Your Voice Count – Every Vote Shapes Tamil Nadu's Future!">
+  </div>
+</footer>   
+
+
+
+<script src="./static/js/other_scripts.js"></script>
+</body>
+</html>

@@ -371,7 +371,8 @@ def overview(request):
     return render(request, "information.html", {"data": data})
 
 
-
+def blogs(request):
+    return render(request,'blog.html')
 
 
 
