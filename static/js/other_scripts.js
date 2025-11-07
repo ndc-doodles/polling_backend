@@ -227,3 +227,155 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
+
+// blog pageee
+
+  // Select filter buttons and cards
+  const filterButtons = document.querySelectorAll(".filter-btn");
+  const cards = document.querySelectorAll(".news-card");
+
+  filterButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      // Remove active styles from all buttons
+      filterButtons.forEach((b) => {
+        b.classList.remove("bg-black", "text-white");
+        b.classList.add("bg-white", "border");
+      });
+
+      // Add active style to clicked button
+      btn.classList.remove("bg-white", "border");
+      btn.classList.add("bg-black", "text-white");
+
+      // Get selected category
+      const selectedCategory = btn.dataset.category;
+
+      // Show/Hide cards with fade transition
+      cards.forEach((card) => {
+        const cardCategory = card.dataset.category;
+        if (selectedCategory === "all" || cardCategory === selectedCategory) {
+          card.classList.remove("hidden", "opacity-0", "scale-95");
+          card.classList.add("opacity-100", "scale-100");
+        } else {
+          card.classList.add("opacity-0", "scale-95");
+          setTimeout(() => card.classList.add("hidden"), 200);
+        }
+      });
+    });
+  });
+
+
+    const readButtons = document.querySelectorAll(".read-btn");
+    const modal = document.getElementById("newsModal");
+    const closeModal = document.getElementById("closeModal");
+    const modalImg = document.getElementById("modalImg");
+    const modalMeta = document.getElementById("modalMeta");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalContent = document.getElementById("modalContent");
+
+    readButtons.forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        const card = e.target.closest(".news-card");
+        const img = card.dataset.img;
+        const date = card.dataset.date;
+        const category = card.dataset.categoryName;
+        const title = card.dataset.title;
+        const content = card.dataset.content.split("|");
+
+        modalImg.src = img;
+        modalMeta.textContent = ${category} • ${date};
+        modalTitle.textContent = title;
+        modalContent.innerHTML = content.map(p => <p>${p}</p>).join("");
+
+        modal.classList.remove("hidden");
+      });
+    });
+
+    closeModal.addEventListener("click", () => {
+      modal.classList.add("hidden");
+    });
+
+    // Close modal on outside click
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.classList.add("hidden");
+      }
+    });
+
+
+
+    // blog pageee
+
+  // Select filter buttons and cards
+  const filterButtons = document.querySelectorAll(".filter-btn");
+  const cards = document.querySelectorAll(".news-card");
+
+  filterButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      // Remove active styles from all buttons
+      filterButtons.forEach((b) => {
+        b.classList.remove("bg-black", "text-white");
+        b.classList.add("bg-white", "border");
+      });
+
+      // Add active style to clicked button
+      btn.classList.remove("bg-white", "border");
+      btn.classList.add("bg-black", "text-white");
+
+      // Get selected category
+      const selectedCategory = btn.dataset.category;
+
+      // Show/Hide cards with fade transition
+      cards.forEach((card) => {
+        const cardCategory = card.dataset.category;
+        if (selectedCategory === "all" || cardCategory === selectedCategory) {
+          card.classList.remove("hidden", "opacity-0", "scale-95");
+          card.classList.add("opacity-100", "scale-100");
+        } else {
+          card.classList.add("opacity-0", "scale-95");
+          setTimeout(() => card.classList.add("hidden"), 200);
+        }
+      });
+    });
+  });
+
+
+    const readButtons = document.querySelectorAll(".read-btn");
+    const modal = document.getElementById("newsModal");
+    const closeModal = document.getElementById("closeModal");
+    const modalImg = document.getElementById("modalImg");
+    const modalMeta = document.getElementById("modalMeta");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalContent = document.getElementById("modalContent");
+
+    readButtons.forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        const card = e.target.closest(".news-card");
+        const img = card.dataset.img;
+        const date = card.dataset.date;
+        const category = card.dataset.categoryName;
+        const title = card.dataset.title;
+        const content = card.dataset.content.split("|");
+
+        modalImg.src = img;
+        modalMeta.textContent = ${category} • ${date};
+        modalTitle.textContent = title;
+        modalContent.innerHTML = content.map(p => <p>${p}</p>).join("");
+
+        modal.classList.remove("hidden");
+      });
+    });
+
+    closeModal.addEventListener("click", () => {
+      modal.classList.add("hidden");
+    });
+
+    // Close modal on outside click
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.classList.add("hidden");
+      }
+    });
+
+
+
