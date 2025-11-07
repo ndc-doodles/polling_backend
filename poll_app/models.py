@@ -96,7 +96,22 @@ class Contact(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name}"
 
 
+class Blog(models.Model):
+    heading = models.CharField(max_length=100)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='blogs')
+    paragraph = models.TextField()
+    image = CloudinaryField('blog_image')
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.heading}"
 
 

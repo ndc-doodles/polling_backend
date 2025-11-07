@@ -72,117 +72,190 @@
   </div>
 </nav>
 
+<!-- ===============================
+     📰 BLOG SECTION WITH FILTERS
+================================== -->
 <div class="max-w-7xl mx-auto px-6 py-16 text-black mt-10">
 
-    <!-- Top section -->
-    <h1 class="text-4xl font-bold text-left mb-10 border-b pb-3 border-gray-300 inline-block uppercase text-black">
-      Tamil Nadu Politics
-    </h1>
-    <p class="text-gray-600 mb-12 max-w-2xl">
-      Stay informed about Tamil Nadu’s dynamic political landscape. From party announcements and elections to leadership
-      updates and key reforms shaping the state’s future.
-    </p>
+  <!-- Top section -->
+  <h1 class="text-4xl font-bold text-left mb-10 border-b pb-3 border-gray-300 inline-block uppercase text-black">
+    Tamil Nadu Politics
+  </h1>
+  <p class="text-gray-600 mb-12 max-w-2xl">
+    Stay informed about Tamil Nadu’s dynamic political landscape. From party announcements and elections to leadership
+    updates and key reforms shaping the state’s future.
+  </p>
 
-    <!-- Filters -->
-    <div class="flex items-center justify-between flex-wrap gap-4 mb-12">
-      <div class="flex gap-3 flex-wrap">
-        <button class="filter-btn px-4 py-2 rounded-full bg-black text-white text-sm" data-category="all">All Articles</button>
-        <button class="filter-btn px-4 py-2 rounded-full bg-white border text-sm" data-category="elections">Elections</button>
-        <button class="filter-btn px-4 py-2 rounded-full bg-white border text-sm" data-category="party-updates">Party Updates</button>
-        <button class="filter-btn px-4 py-2 rounded-full bg-white border text-sm" data-category="leaders">Leaders</button>
-        <button class="filter-btn px-4 py-2 rounded-full bg-white border text-sm" data-category="reforms">Reforms</button>
-      </div>
-    </div>
+  <!-- ===============================
+       FILTER BUTTONS
+  =============================== -->
+  <div class="flex items-center justify-between flex-wrap gap-4 mb-12">
+    <div class="flex gap-3 flex-wrap">
 
-    <!-- Cards Grid -->
-    <div id="newsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-      <!-- Card 1 -->
-      <div class="news-card bg-white rounded-xl shadow-sm border hover:shadow-md transition overflow-hidden" 
-           data-category="elections"
-           data-title="Vijay announced as CM candidate for TVK"
-           data-date="Jul 04, 2025"
-           data-category-name="Elections"
-           data-img="./static/images/n3.jpg"
-           data-content="Actor Vijay officially declared as the Chief Ministerial candidate of Tamil Nadu Vetri Kazhagam for the 2026 Assembly elections, confirming no alliance with BJP or DMK.|His announcement gathered massive public attention as he promised youth-centric governance with a focus on transparency and employment.|Political analysts view this as a major shift that could redefine Tamil Nadu’s political balance in 2026.">
-        <img src="./static/images/n3.jpg" class="w-full h-56 object-cover" alt="Vijay TVK announcement" />
-        <div class="p-5">
-          <p class="text-red-700 text-sm font-medium">Elections • Jul 04, 2025</p>
-          <h2 class="text-lg font-semibold mt-2">Vijay announced as CM candidate for TVK</h2>
-          <p class="text-gray-600 text-sm mt-2">
-            Actor Vijay officially declared as the Chief Ministerial candidate of Tamil Nadu Vetri Kazhagam for the 2026 Assembly elections, confirming no alliance with BJP or DMK.
-          </p>
-          <button class="read-btn mt-4 text-red-700 flex items-center gap-2 font-medium">
-            Read More <i class="ri-arrow-right-line"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="news-card bg-white rounded-xl shadow-sm border hover:shadow-md transition overflow-hidden"
-           data-category="party-updates"
-           data-title="DMK and AIADMK prepare for 2026 elections"
-           data-date="Jun 20, 2025"
-           data-category-name="Party Updates"
-           data-img="https://images.unsplash.com/photo-1568658176307-8a7e6d882c03"
-           data-content="Both major Dravidian parties are gearing up for the upcoming elections, announcing candidate lists, alliances, and manifestos.|DMK focuses on welfare continuity while AIADMK aims to reclaim its strongholds with new leadership strategies.|Analysts expect a tight contest across several urban constituencies.">
-        <img src="https://images.unsplash.com/photo-1568658176307-8a7e6d882c03" class="w-full h-56 object-cover" alt="Political rally" />
-        <div class="p-5">
-          <p class="text-red-700 text-sm font-medium">Party Updates • Jun 20, 2025</p>
-          <h2 class="text-lg font-semibold mt-2">DMK and AIADMK prepare for 2026 elections</h2>
-          <p class="text-gray-600 text-sm mt-2">
-            Both major Dravidian parties are gearing up for the upcoming elections, announcing candidate lists, alliances, and development-focused manifestos.
-          </p>
-          <button class="read-btn mt-4 text-red-700 flex items-center gap-2 font-medium">
-            Read More <i class="ri-arrow-right-line"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="news-card bg-white rounded-xl shadow-sm border hover:shadow-md transition overflow-hidden"
-           data-category="reforms"
-           data-title="Tamil Nadu launches youth employment mission"
-           data-date="May 15, 2025"
-           data-category-name="Reforms"
-           data-img="https://images.unsplash.com/photo-1578926287940-53c76a4f0cc4"
-           data-content="The government introduced a mission aimed at generating one million jobs for youth across districts by 2026.|Training centres and digital upskilling programs are being launched under this initiative.|The policy focuses on integrating education with employment for long-term growth.">
-        <img src="https://images.unsplash.com/photo-1578926287940-53c76a4f0cc4" class="w-full h-56 object-cover" alt="Chennai secretariat" />
-        <div class="p-5">
-          <p class="text-red-700 text-sm font-medium">Reforms • May 15, 2025</p>
-          <h2 class="text-lg font-semibold mt-2">Tamil Nadu launches youth employment mission</h2>
-          <p class="text-gray-600 text-sm mt-2">
-            The government introduced a new mission aimed at creating over one million job opportunities for youth across districts by 2026.
-          </p>
-          <button class="read-btn mt-4 text-red-700 flex items-center gap-2 font-medium">
-            Read More <i class="ri-arrow-right-line"></i>
-          </button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- Modal -->
-  <div id="newsModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-[9999]">
-    <div class="bg-white max-w-2xl w-full rounded-lg relative shadow-lg overflow-hidden">
-      <!-- Close Button -->
-      <button id="closeModal" class="absolute top-4 right-4 text-gray-700 hover:text-black text-2xl">
-        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><path fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2.3" d="m8.464 15.535l7.072-7.07m-7.072 0l7.072 7.07"/></svg>
+      <!-- "All Articles" button -->
+      <button class="filter-btn px-4 py-2 rounded-full bg-black text-white text-sm" data-category="all">
+        All Articles
       </button>
 
-      <img id="modalImg" src="" class="w-full h-[400px] object-cover" />
-      <div class="p-6">
-        <p id="modalMeta" class="text-red-700 text-sm font-medium"></p>
-        <h2 id="modalTitle" class="text-2xl font-bold mt-2 mb-4"></h2>
-        <div id="modalContent" class="space-y-4 text-gray-700 text-sm leading-relaxed"></div>
-      </div>
+      <!-- Dynamic categories -->
+      {% for category in categories %}
+        <button
+          class="filter-btn px-4 py-2 rounded-full bg-white border text-sm hover:bg-gray-100 transition"
+          data-category="{{ category.slug|default:category.name|slugify }}">
+          {{ category.name }}
+        </button>
+      {% empty %}
+        <p class="text-gray-500 text-sm">No categories available.</p>
+      {% endfor %}
     </div>
   </div>
 
+  <!-- ===============================
+       BLOG GRID
+  =============================== -->
+  <div id="newsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    {% for blog in blogs %}
+      <div class="news-card bg-white rounded-xl shadow-sm border hover:shadow-md transition-all duration-300 overflow-hidden opacity-100 scale-100"
+          data-category="{{ blog.category.slug|default:blog.category.name|slugify }}"
+          data-category-name="{{ blog.category.name|default:'General' }}"
+          data-title="{{ blog.title }}"
+          data-date="{{ blog.created|date:'M d, Y' }}"
+          data-img="{{ blog.image.url }}"
+          data-content="{{ blog.paragraph|safe }}">
 
+        {% if blog.image %}
+          <img src="{{ blog.image.url }}" class="w-full h-56 object-cover" alt="{{ blog.title }}">
+        {% endif %}
 
+        <div class="p-5">
+          <p class="text-red-700 text-sm font-medium">
+            {{ blog.category.name|default:'General' }} • {{ blog.created|date:"M d, Y" }}
+          </p>
+          <h2 class="text-lg font-semibold mt-2">{{ blog.title }}</h2>
+          <p class="text-gray-600 text-sm mt-2">
+            {{ blog.paragraph|truncatewords:25 }}
+          </p>
+          <button class="read-btn mt-4 text-red-700 flex items-center gap-2 font-medium hover:gap-3 transition-all">
+            Read More <i class="ri-arrow-right-line"></i>
+          </button>
+        </div>
+      </div>
+    {% empty %}
+      <p class="col-span-3 text-center text-gray-500">No blogs available.</p>
+    {% endfor %}
+  </div>
+</div>
 
+<!-- ===============================
+     MODAL (Popup for Read More)
+=============================== -->
+<div id="newsModal"
+     class="fixed inset-0 bg-black bg-opacity-60 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center z-50">
+  <div class="bg-white rounded-2xl w-11/12 md:w-3/4 lg:w-1/2 max-h-[90vh] overflow-y-auto shadow-xl transform transition-all scale-95 p-6 relative">
+    <button id="closeModal"
+            class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+    <img id="modalImg" src="" alt="Modal Image" class="w-full h-64 object-cover rounded-md mb-4">
+    <p id="modalMeta" class="text-red-700 text-sm font-medium mb-2"></p>
+    <h2 id="modalTitle" class="text-xl font-semibold mb-4"></h2>
+    <div id="modalContent" class="text-gray-700 leading-relaxed space-y-3"></div>
+  </div>
+</div>
+
+<!-- ===============================
+     SCRIPT SECTION
+=============================== -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // ================================
+  // CATEGORY FILTERING
+  // ================================
+  const filterButtons = document.querySelectorAll(".filter-btn");
+  const cards = document.querySelectorAll(".news-card");
+
+  filterButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      // Reset all buttons
+      filterButtons.forEach((b) => {
+        b.classList.remove("bg-black", "text-white");
+        b.classList.add("bg-white", "border");
+      });
+
+      // Activate clicked one
+      btn.classList.remove("bg-white", "border");
+      btn.classList.add("bg-black", "text-white");
+
+      const selectedCategory = btn.dataset.category?.trim().toLowerCase();
+
+      // Filter cards
+      cards.forEach((card) => {
+        const cardCategory = card.dataset.category?.trim().toLowerCase();
+
+        if (selectedCategory === "all" || selectedCategory === cardCategory) {
+          card.classList.remove("hidden", "opacity-0", "scale-95");
+          card.classList.add("opacity-100", "scale-100");
+        } else {
+          card.classList.remove("opacity-100", "scale-100");
+          card.classList.add("opacity-0", "scale-95");
+          setTimeout(() => card.classList.add("hidden"), 200);
+        }
+      });
+    });
+  });
+
+  // ================================
+  // MODAL FUNCTIONALITY
+  // ================================
+  const readButtons = document.querySelectorAll(".read-btn");
+  const modal = document.getElementById("newsModal");
+  const closeModal = document.getElementById("closeModal");
+  const modalImg = document.getElementById("modalImg");
+  const modalMeta = document.getElementById("modalMeta");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalContent = document.getElementById("modalContent");
+
+  readButtons.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const card = e.target.closest(".news-card");
+      if (!card) return;
+
+      const img = card.dataset.img || card.querySelector("img")?.src || "";
+      const date = card.dataset.date || "";
+      const category = card.dataset.categoryName || card.dataset.category || "";
+      const title = card.dataset.title || card.querySelector("h2")?.textContent || "";
+      const contentHTML = card.dataset.content || card.querySelector("p.text-gray-600")?.innerHTML || "";
+
+      modalImg.src = img;
+      modalMeta.textContent = `${category} • ${date}`;
+      modalTitle.textContent = title;
+      modalContent.innerHTML = contentHTML;
+
+      modal.classList.remove("hidden");
+      setTimeout(() => {
+        modal.classList.add("opacity-100", "scale-100");
+      }, 10);
+    });
+  });
+
+  // ================================
+  // CLOSE MODAL
+  // ================================
+  function hideModal() {
+    modal.classList.remove("opacity-100", "scale-100");
+    modal.classList.add("opacity-0");
+    setTimeout(() => modal.classList.add("hidden"), 200);
+  }
+
+  closeModal.addEventListener("click", hideModal);
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) hideModal();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modal.classList.contains("hidden")) hideModal();
+  });
+});
+</script>
 
 
 

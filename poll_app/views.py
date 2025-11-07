@@ -372,7 +372,13 @@ def overview(request):
 
 
 def blogs(request):
-    return render(request,'blog.html')
+    blogs = Blog.objects.all()
+    categories = Category.objects.all()
+    context = {
+        "blogs": blogs,
+        "categories": categories,
+    }
+    return render(request,'blog.html',context)
 
 
 
