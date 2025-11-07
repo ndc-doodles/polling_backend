@@ -13,23 +13,17 @@
 <body class="bg-gray-50 text-white">
 
 
-<!-- Navbar -->
-<nav id="navbar" class="fixed w-full top-0 z-[9999] bg-[#06038D] transition-colors duration-300">
+<nav id="navbar" class="fixed w-full top-0 z-50 bg-[#06038D] transition-colors duration-300 z-[9999]">
   <div class="px-5 sm:px-10 md:px-20 flex justify-between items-center h-16">
-    <a href="index.html" class="text-2xl font-bold text-white" data-en="TN Polls 2026" data-ta="டி.என். தேர்தல் 2026">டி.என். தேர்தல் 2026</a>
+    <a href="{% url 'index' %}" class="text-2xl font-bold text-white">TN Polls 2026</a>
 
     <!-- Desktop Menu -->
     <div class="hidden md:flex items-center space-x-6">
-      <a href="index.html" class="hover:text-gray-200 transition" data-en="Home" data-ta="முகப்பு">முகப்பு</a>
-      <a href="information.html" class="hover:text-gray-200 transition" data-en="Overview" data-ta="மேலோட்டம்">மேலோட்டம்</a>
-      <a href="news.html" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition"
-   data-en="News" data-ta="செய்திகள்">செய்திகள்</a>
-
-<a href="blog.html" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition"
-   data-en="Blogs" data-ta="வலைப்பதிவுகள்">வலைப்பதிவுகள்</a>
-
-
+      <a href="{% url 'index' %}" class="hover:text-gray-200 transition">Home</a>
+      <a href="{% url 'overview' %}" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition">Overview</a>
+      <a href="{% url 'news' %}" class="hover:text-gray-200 transition">News</a>
       <div class="flex items-center space-x-2">
+  <div class="flex items-center space-x-2">
         <span id="lang-label" class="text-white font-semibold text-sm">தமிழ்</span>
         <label class="relative inline-flex items-center cursor-pointer">
           <input type="checkbox" class="sr-only peer" id="lang-toggle">
@@ -37,6 +31,7 @@
           <div class="absolute left-[2px] top-[2px] w-5 h-5 bg-white rounded-full shadow-md peer-checked:translate-x-[18px] transition-transform duration-300"></div>
         </label>
       </div>
+</div>
     </div>
 
     <!-- Mobile Menu Button -->
@@ -53,24 +48,23 @@
 
   <!-- Mobile Sidebar Menu -->
   <div id="mobile-menu" class="fixed top-0 right-[-70%] h-full w-[70%] bg-[#06038D]/95 text-white shadow-lg transition-all duration-500 z-50 flex flex-col px-6 py-8 space-y-4">
-    <a href="index.html" class="hover:text-red-500 transition" data-en="Home" data-ta="முகப்பு">முகப்பு</a>
-    <a href="information.html" class="hover:text-red-500 transition" data-en="Overview" data-ta="மேலோட்டம்">மேலோட்டம்</a>
-   <a href="news.html" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition"
-   data-en="News" data-ta="செய்திகள்">செய்திகள்</a>
+    <a href="{% url 'index' %}" class="hover:text-red-500 transition">Home</a>
+    <a href="{% url 'overview' %}" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition">Overview</a>
+    <a href="{% url 'news' %}" class="hover:text-red-500 transition">News</a>
+   <div class="flex items-center space-x-2 mt-6">
+  <span id="mobile-lang-label" class="text-white font-semibold text-sm">ENG</span>
+  <label class="relative inline-flex items-center cursor-pointer">
+    <input type="checkbox" class="sr-only peer" id="mobile-lang-toggle">
+    <!-- Track -->
+    <div class="w-10 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-500 transition-colors"></div>
+    <!-- Slider -->
+    <div class="absolute left-[2px] top-[2px] w-5 h-5 bg-white rounded-full shadow-md peer-checked:translate-x-[18px] transition-transform duration-300"></div>
+  </label>
+</div>
 
-<a href="blog.html" class="px-4 py-2 border border-white rounded bg-white/10 text-white hover:bg-white/20 transition"
-   data-en="Blogs" data-ta="வலைப்பதிவுகள்">வலைப்பதிவுகள்</a>
-
-    <div class="flex items-center space-x-2 mt-6">
-      <span id="mobile-lang-label" class="text-white font-semibold text-sm">தமிழ்</span>
-      <label class="relative inline-flex items-center cursor-pointer">
-        <input type="checkbox" class="sr-only peer" id="mobile-lang-toggle">
-        <div class="w-10 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-500 transition-colors"></div>
-        <div class="absolute left-[2px] top-[2px] w-5 h-5 bg-white rounded-full shadow-md peer-checked:translate-x-[18px] transition-transform duration-300"></div>
-      </label>
-    </div>
   </div>
 </nav>
+
 
 <!-- ===============================
      📰 BLOG SECTION WITH FILTERS
@@ -165,36 +159,35 @@
      SCRIPT SECTION
 =============================== -->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  // ================================
-  // CATEGORY FILTERING
-  // ================================
+document.addEventListener("DOMContentLoaded", () => {
+  // =============================
+  // BLOG PAGE INTERACTIONS
+  // =============================
+
+  // --- FILTER BUTTONS ---
   const filterButtons = document.querySelectorAll(".filter-btn");
   const cards = document.querySelectorAll(".news-card");
 
   filterButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      // Reset all buttons
+      // Reset all button styles
       filterButtons.forEach((b) => {
         b.classList.remove("bg-black", "text-white");
         b.classList.add("bg-white", "border");
       });
 
-      // Activate clicked one
+      // Activate selected button
       btn.classList.remove("bg-white", "border");
       btn.classList.add("bg-black", "text-white");
 
-      const selectedCategory = btn.dataset.category?.trim().toLowerCase();
-
       // Filter cards
+      const selectedCategory = btn.dataset.category;
       cards.forEach((card) => {
-        const cardCategory = card.dataset.category?.trim().toLowerCase();
-
-        if (selectedCategory === "all" || selectedCategory === cardCategory) {
+        const cardCategory = card.dataset.category;
+        if (selectedCategory === "all" || cardCategory === selectedCategory) {
           card.classList.remove("hidden", "opacity-0", "scale-95");
           card.classList.add("opacity-100", "scale-100");
         } else {
-          card.classList.remove("opacity-100", "scale-100");
           card.classList.add("opacity-0", "scale-95");
           setTimeout(() => card.classList.add("hidden"), 200);
         }
@@ -202,9 +195,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // ================================
+  // =============================
   // MODAL FUNCTIONALITY
-  // ================================
+  // =============================
   const readButtons = document.querySelectorAll(".read-btn");
   const modal = document.getElementById("newsModal");
   const closeModal = document.getElementById("closeModal");
@@ -213,48 +206,74 @@ document.addEventListener("DOMContentLoaded", function () {
   const modalTitle = document.getElementById("modalTitle");
   const modalContent = document.getElementById("modalContent");
 
+  // --- OPEN MODAL ---
   readButtons.forEach((btn) => {
     btn.addEventListener("click", (e) => {
-      const card = e.target.closest(".news-card");
+      e.preventDefault(); // ⛔ prevent link navigation if anchor used
+      e.stopPropagation(); // avoid bubbling issues
+
+      const card = btn.closest(".news-card");
       if (!card) return;
 
+      // Extract card data
       const img = card.dataset.img || card.querySelector("img")?.src || "";
       const date = card.dataset.date || "";
-      const category = card.dataset.categoryName || card.dataset.category || "";
-      const title = card.dataset.title || card.querySelector("h2")?.textContent || "";
-      const contentHTML = card.dataset.content || card.querySelector("p.text-gray-600")?.innerHTML || "";
+      const category =
+        card.dataset.categoryName || card.dataset.category || "";
+      const title =
+        card.dataset.title || card.querySelector("h2")?.textContent || "";
+      const contentParts = (card.dataset.content || "")
+        .split("|")
+        .filter((p) => p.trim() !== "");
 
+      // Fill modal data
       modalImg.src = img;
       modalMeta.textContent = `${category} • ${date}`;
       modalTitle.textContent = title;
-      modalContent.innerHTML = contentHTML;
+      modalContent.innerHTML =
+        contentParts.length > 0
+          ? contentParts
+              .map(
+                (p) =>
+                  `<p class="mb-3 text-gray-700 leading-relaxed">${p}</p>`
+              )
+              .join("")
+          : `<p class="text-gray-700">${card.querySelector("p.text-gray-600")?.textContent || ""}</p>`;
 
+      // Show modal with fade animation
       modal.classList.remove("hidden");
       setTimeout(() => {
-        modal.classList.add("opacity-100", "scale-100");
+        modal.classList.add("flex", "opacity-100", "animate-fadeIn");
       }, 10);
     });
   });
 
-  // ================================
-  // CLOSE MODAL
-  // ================================
-  function hideModal() {
-    modal.classList.remove("opacity-100", "scale-100");
+  // --- CLOSE MODAL ---
+  const hideModal = () => {
+    modal.classList.remove("opacity-100", "animate-fadeIn");
     modal.classList.add("opacity-0");
     setTimeout(() => modal.classList.add("hidden"), 200);
+  };
+
+  if (closeModal) {
+    closeModal.addEventListener("click", hideModal);
   }
 
-  closeModal.addEventListener("click", hideModal);
+  // Close when clicking outside modal content
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) hideModal();
+    });
+  }
 
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) hideModal();
-  });
-
+  // --- Keyboard Escape key support ---
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !modal.classList.contains("hidden")) hideModal();
+    if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+      hideModal();
+    }
   });
 });
+
 </script>
 
 
@@ -289,11 +308,11 @@ document.addEventListener("DOMContentLoaded", function () {
                  data-ta="வேட்பாளர்கள்"
                  data-en="Candidates"
                  class="hover:text-white transition"></a></li>
-          <li><a href="information.html"
+          <li><a href="{% url 'overview' %}"
                  data-ta="தகவல்கள்"
                  data-en="Informations"
                  class="hover:text-white transition"></a></li>
-          <li><a href="news.html"
+          <li><a href="{% url 'news' %}" 
                  data-ta="செய்திகள்"
                  data-en="News"
                  class="hover:text-white transition"></a></li>
@@ -306,11 +325,11 @@ document.addEventListener("DOMContentLoaded", function () {
            data-en="[Latest Updates]"
            class="uppercase text-xs text-gray-500 mb-2"></p>
         <ul class="space-y-1">
-          <li><a href="news.html"
+          <li><a href="{% url 'news' %}" 
                  data-ta="ஆழ்ந்த பார்வைகள்"
                  data-en="Insights"
                  class="hover:text-white transition"></a></li>
-          <li><a href="news.html"
+          <li><a href="{% url 'news' %}" 
                  data-ta="நிகழ்வுகள்"
                  data-en="Events"
                  class="hover:text-white transition"></a></li>

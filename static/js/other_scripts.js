@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const container = opt.closest('.news-card');
       const title = container?.dataset.title || 'Latest News';
       const description = container?.dataset.description?.slice(0, 120) || '';
-      const detailPage = `${window.location.origin}/polling/blog_detail.html`;
+      const detailPage = `${window.location.origin}/polling/news_detail.html`;
 
       // Message structure for sharing — bold title + description + link
       const message = `**${title}**\n\n${description}...\n\nRead more: ${detailPage}`;
@@ -134,7 +134,7 @@ document.querySelectorAll('.news-card, article[data-title]').forEach(card => {
     `;
 
     localStorage.setItem('selectedNews', JSON.stringify({ title, date, image, description, content }));
-    window.location.href = 'blog_detail.html';
+    window.location.href = 'news_detail.html';
   });
 });
 
