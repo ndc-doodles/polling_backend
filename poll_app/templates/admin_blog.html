@@ -1,0 +1,306 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-[#151a37] font-sans">
+
+  <div class="flex ">
+
+
+
+<div id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-[#06038D] text-white p-6 z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+  <div class="flex items-center justify-between mb-6">
+    <div class="w-full bg-white flex justify-center pl-10">
+<a href="index.html" id="brand" class="transition-all block">
+      <h1 class="mt-2 text-lg md:text-xl md:mt-0 uppercase font-bold text-[#06038D]">Tamil Nadu Polling 2026</h1>
+      
+    </a>    </div>
+    <button onclick="toggleSidebar()" class="md:hidden text-white text-2xl">&times;</button>
+  </div>
+   <nav>
+   <ul class="space-y-4 text-sm">
+      <li>
+        <a href="{% url 'dashboard' %}"  class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Dashboard</a>
+      </li>
+        <li>
+        <a href="{% url 'admin_party' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Party</a>
+      </li>
+        <a href="{% url 'candidates' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]" >Candidates</a>
+      </li>
+       <li>
+        <a href="{% url 'opinion' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Public Opinions</a>
+      </li>
+      <li>
+        <a href="{% url 'admin_news' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]" >News</a>
+      </li>
+       <li>
+        <a href="{% url 'admin_blog' %}" class="block py-2 px-4 rounded bg-white text-[#151a37]">Blogs</a>
+      </li>
+      <li>
+        <a href="{% url 'admin_contact' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Contact Form </a>
+      </li>
+        <li>
+        <a href="{% url 'vote_analysis' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Votes</a>
+      </li>
+      <li>
+        <a href="{% url 'logout' %}" class="block py-2 px-4 rounded bg-[red] text-white">Logout</a>
+      </li>
+    </ul>
+
+   </nav>
+</div>
+<button onclick="toggleSidebar()" class="md:hidden fixed top-4 left-4 z-50 bg-[#06038D] text-white p-2 rounded shadow-lg">
+  &#9776;
+</button>
+
+
+
+
+
+<section class="px-6 md:px-20 py-10 md:ml-64 w-full">
+  <h2 class="text-3xl font-bold mb-8 text-[#06038D] text-center md:text-left">
+    Manage Blogs
+  </h2>
+
+  <!-- Blog Form -->
+  <div class="bg-white p-8 rounded-xl shadow mb-10">
+    <div class="flex justify-between items-center mb-5">
+      <h3 class="text-xl font-semibold" id="form-title">Add Blog</h3>
+      <button
+        type="button"
+        onclick="openCategoryModal()"
+        class="bg-[#06038D] text-white px-4 py-2 rounded-lg hover:bg-[#0b06b5] transition"
+      >
+        + Add Category
+      </button>
+    </div>
+
+    <form id="blog-form" action="{% url 'admin_blog' %}" method="POST" enctype="multipart/form-data" class="space-y-5">
+      {% csrf_token %}
+      <div class="flex flex-col md:flex-row gap-5">
+        <div class="flex-1">
+          <label class="block text-sm font-medium mb-1">Heading</label>
+          <input
+            type="text"
+            name="heading"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#06038D]"
+            placeholder="Enter heading"
+            required
+          >
+        </div>
+
+        <div class="flex-1">
+          <label class="block text-sm font-medium mb-1">Category</label>
+          <select
+            name="category"
+            id="category-select"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#06038D]"
+            required
+          >
+            <option value="">-- Select Category --</option>
+            {% for cat in categories %}
+              <option value="{{ cat.id }}">{{ cat.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-5">
+
+        <div class="flex-1">
+          <label class="block text-sm font-medium mb-1">Image</label>
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#06038D]"
+          >
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Paragraph</label>
+        <textarea
+          name="paragraph"
+          class="w-full border border-gray-300 rounded-lg px-4 py-2 h-32 focus:ring-2 focus:ring-[#06038D]"
+          placeholder="Write your blog content..."
+          required
+        ></textarea>
+      </div>
+
+      <button type="submit" class="bg-[#06038D] text-white px-8 py-2.5 rounded-lg hover:bg-[#0b06b5] transition">
+        Add Blog
+      </button>
+    </form>
+  </div>
+
+  <!-- Blog Table -->
+  <div class="overflow-x-auto bg-white rounded-xl shadow">
+    <table class="min-w-full divide-y divide-gray-200 text-sm">
+      <thead class="bg-[#06038D] text-white">
+        <tr>
+          <th class="px-4 py-3 text-left">Image</th>
+          <th class="px-4 py-3 text-left">Heading</th>
+          <th class="px-4 py-3 text-left">Category</th>
+          <th class="px-4 py-3 text-left">Date</th>
+          <th class="px-4 py-3 text-left">Paragraph</th>
+          <th class="px-4 py-3 text-left">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody class="divide-y divide-gray-200">
+        {% for blog in blogs %}
+        <tr>
+          <td class="px-4 py-3">
+            {% if blog.image %}
+              <img src="{{ blog.image.url }}" class="w-16 h-16 object-cover rounded-md">
+            {% else %}
+              No Image
+            {% endif %}
+          </td>
+
+          <td class="px-4 py-3 font-semibold">{{ blog.heading }}</td>
+          <td class="px-4 py-3">{{ blog.category.name }}</td>
+          <td class="px-4 py-3">{{ blog.created|date:"Y-m-d" }}</td>
+
+          <td class="px-4 py-3 text-gray-700">
+            {% if blog.paragraph|length > 100 %}
+              {{ blog.paragraph|slice:":100" }}...
+              <button
+                type="button"
+                onclick="openModal('{{ blog.paragraph|escapejs }}')"
+                class="text-blue-600 underline"
+              >Read more</button>
+            {% else %}
+              {{ blog.paragraph }}
+            {% endif %}
+          </td>
+
+          <td class="px-4 py-3">
+            <form method="POST" action="{% url 'delete_blog' blog.id %}">
+              {% csrf_token %}
+              <button type="submit" class="text-red-600 hover:underline">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6" class="text-center py-6 text-gray-500">No blogs available.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="flex justify-center items-center gap-2 py-4 text-sm">
+      {% if blogs.has_previous %}
+        <a href="?page=1" class="px-3 py-1 bg-gray-100 rounded hover:bg-gray-200">« First</a>
+        <a href="?page={{ blogs.previous_page_number }}" class="px-3 py-1 bg-gray-100 rounded hover:bg-gray-200">‹ Prev</a>
+      {% endif %}
+
+      <span class="px-4 py-1 bg-[#06038D] text-white rounded">
+        Page {{ blogs.number }} of {{ blogs.paginator.num_pages }}
+      </span>
+
+      {% if blogs.has_next %}
+        <a href="?page={{ blogs.next_page_number }}" class="px-3 py-1 bg-gray-100 rounded hover:bg-gray-200">Next ›</a>
+        <a href="?page={{ blogs.paginator.num_pages }}" class="px-3 py-1 bg-gray-100 rounded hover:bg-gray-200">Last »</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Blog Modal -->
+  <div id="blogModal" class="fixed inset-0 hidden bg-black bg-opacity-50 items-center justify-center">
+    <div class="bg-white p-6 rounded w-11/12 md:w-1/2 max-h-[80vh] overflow-y-auto">
+      <h2 class="text-lg font-semibold mb-4">Full Blog Content</h2>
+      <div id="blogModalContent" class="text-gray-700 mb-4"></div>
+      <div class="flex justify-end">
+        <button onclick="closeModal()" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Modal -->
+  <div id="categoryModal" class="fixed inset-0 hidden bg-black bg-opacity-50 items-center justify-center">
+    <div class="bg-white p-6 rounded w-96">
+      <h2 class="text-lg font-semibold mb-4 text-[#06038D]">Add Category</h2>
+      <form id="category-form" method="POST" action="{% url 'add_category' %}">
+        {% csrf_token %}
+        <input
+          type="text"
+          name="name"
+          placeholder="Enter category name"
+          required
+          class="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:ring-2 focus:ring-[#06038D]"
+        >
+        <div class="flex justify-end gap-3">
+          <button type="button" onclick="closeCategoryModal()" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">
+            Cancel
+          </button>
+          <button type="submit" class="bg-[#06038D] text-white px-4 py-2 rounded hover:bg-[#0b06b5]">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ✅ Success Modal -->
+  {% if messages %}
+  <div id="successModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div class="bg-white rounded-lg shadow-lg w-80 p-6 text-center">
+      {% for message in messages %}
+        <p class="text-green-700 font-semibold text-lg">{{ message }}</p>
+      {% endfor %}
+      <div class="mt-4">
+        <button onclick="closeSuccessModal()" class="bg-[#06038D] text-white px-4 py-2 rounded hover:bg-[#0b06b5]">OK</button>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <script>
+    // Blog Read Modal
+    function openModal(content) {
+      const modal = document.getElementById("blogModal");
+      document.getElementById("blogModalContent").innerText = content;
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("blogModal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    // Category Modal
+    function openCategoryModal() {
+      const modal = document.getElementById("categoryModal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeCategoryModal() {
+      const modal = document.getElementById("categoryModal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    // ✅ Success Modal
+    function closeSuccessModal() {
+      const modal = document.getElementById("successModal");
+      modal.classList.add("hidden");
+    }
+  </script>
+</section>
+
+
+<script src="./static/js/admin_scripts.js"></script>
+</body>
+</html>

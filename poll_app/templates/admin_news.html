@@ -1,0 +1,350 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-[#151a37] font-sans">
+
+  <div class="flex ">
+
+
+
+<div id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-[#06038D] text-white p-6 z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+  <div class="flex items-center justify-between mb-6">
+    <div class="w-full bg-white flex justify-center pl-10">
+<a href="index.html" id="brand" class="transition-all block">
+      <h1 class="mt-2 text-lg md:text-xl md:mt-0 uppercase font-bold text-[#06038D]">Tamil Nadu Polling 2026</h1>
+      
+    </a>    </div>
+    <button onclick="toggleSidebar()" class="md:hidden text-white text-2xl">&times;</button>
+  </div>
+   <nav>
+    <ul class="space-y-4 text-sm">
+      <li>
+        <a href="{% url 'dashboard' %}"  class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Dashboard</a>
+      </li>
+        <li>
+        <a href="{% url 'admin_party' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Party</a>
+      </li>
+        <a href="{% url 'candidates' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]" >Candidates</a>
+      </li>
+       <li>
+        <a href="{% url 'opinion' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Public Opinions</a>
+      </li>
+      <li>
+        <a href="{% url 'admin_news' %}" class="block py-2 px-4 rounded bg-white text-[#151a37]">News</a>
+      </li>
+       <li>
+        <a href="{% url 'admin_blog' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Blogs</a>
+      </li>
+      <li>
+        <a href="{% url 'admin_contact' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Contact Form </a>
+      </li>
+        <li>
+        <a href="{% url 'vote_analysis' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Votes</a>
+      </li>
+      <li>
+        <a href="{% url 'logout' %}" class="block py-2 px-4 rounded bg-[red] text-white">Logout</a>
+      </li>
+    </ul>
+
+   </nav>
+</div>
+<button onclick="toggleSidebar()" class="md:hidden fixed top-4 left-4 z-50 bg-[#06038D] text-white p-2 rounded shadow-lg">
+  &#9776;
+</button>
+
+<section class="px-6 md:px-20 py-10 md:ml-64 w-full">
+  <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-[#06038D] text-center md:text-left">
+    Manage News
+  </h2>
+
+  <!-- Add News Form -->
+  <div class="bg-white p-6 rounded shadow mb-8">
+    <h3 class="text-lg font-semibold mb-4" id="form-title">Add News</h3>
+    <form id="news-form" action="{% url 'admin_news' %}" method="POST" enctype="multipart/form-data" class="space-y-4">
+      {% csrf_token %}
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="flex-1">
+          <label class="block text-sm font-medium mb-1">Heading</label>
+          <input type="text" name="headline" class="w-full border border-gray-300 rounded px-3 py-2" required>
+        </div>
+        <div class="flex-1">
+          <label class="block text-sm font-medium mb-1">Category</label>
+          <input type="text" name="category" class="w-full border border-gray-300 rounded px-3 py-2" required>
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="flex-1">
+          <label class="block text-sm font-medium mb-1">Image</label>
+          <input type="file" name="image" accept="image/*" class="w-full border border-gray-300 rounded px-3 py-2">
+        </div>
+        <div class="flex-1">
+          <label class="block text-sm font-medium mb-1">Label (for sliding news)</label>
+          <input type="text" name="label" class="w-full border border-gray-300 rounded px-3 py-2">
+        </div>
+      </div>
+
+      <!-- Boolean Toggles -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+        <label class="flex items-center gap-2 text-sm font-medium text-gray-700">
+          <input type="checkbox" name="top_rated" class="form-checkbox text-[#06038D] w-5 h-5">
+          Top Rated
+        </label>
+        <label class="flex items-center gap-2 text-sm font-medium text-gray-700">
+          <input type="checkbox" name="slide" class="form-checkbox text-[#06038D] w-5 h-5">
+          Slide
+        </label>
+        <label class="flex items-center gap-2 text-sm font-medium text-gray-700">
+          <input type="checkbox" name="latest" class="form-checkbox text-[#06038D] w-5 h-5">
+          Latest
+        </label>
+        <label class="flex items-center gap-2 text-sm font-medium text-gray-700">
+          <input type="checkbox" name="upcoming" class="form-checkbox text-[#06038D] w-5 h-5">
+          Upcoming
+        </label>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1 mt-4">Paragraph</label>
+        <textarea name="news" class="w-full border border-gray-300 rounded px-3 py-2 h-32" required></textarea>
+      </div>
+
+      <div class="mt-4">
+        <button type="submit" class="bg-[#06038D] text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+          Add News
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- News Table -->
+  <div class="overflow-x-auto bg-white rounded shadow">
+    <div class="flex justify-between items-center px-3 py-3">
+      <button id="delete-selected" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition hidden">
+        Delete Selected
+      </button>
+      <div>
+        <span class="text-gray-700 font-medium">Total: {{ news_items.count }}</span>
+      </div>
+    </div>
+
+    <table class="min-w-full divide-y divide-gray-200 text-sm">
+      <thead class="bg-[#06038D] text-white">
+        <tr>
+          <th class="px-3 py-2"><input type="checkbox" id="select-all" class="w-4 h-4"></th>
+          <th class="px-3 py-2 text-left">Image</th>
+          <th class="px-3 py-2 text-left">Heading</th>
+          <th class="px-3 py-2 text-left">Category</th>
+          <th class="px-3 py-2 text-left">Label</th>
+          <th class="px-3 py-2 text-left">Booleans</th>
+          <th class="px-3 py-2 text-left">Paragraph</th>
+          <th class="px-3 py-2 text-left">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in news_items %}
+        <tr class="border-b hover:bg-gray-50 transition">
+          <td class="px-3 py-2">
+            <input type="checkbox" class="row-checkbox w-4 h-4" data-id="{{ item.id }}">
+          </td>
+          <td class="px-3 py-2">
+            {% if item.image %}
+              <img src="{{ item.image.url }}" class="w-20 h-14 object-cover rounded">
+            {% endif %}
+          </td>
+          <td class="px-3 py-2">{{ item.headline }}</td>
+          <td class="px-3 py-2">{{ item.category }}</td>
+          <td class="px-3 py-2">{{ item.label }}</td>
+          <td class="px-3 py-2">
+            {% if item.top_rated %}<span class="text-green-600">Top</span>{% endif %}
+            {% if item.slide %}<span class="text-blue-600 ml-1">Slide</span>{% endif %}
+            {% if item.latest %}<span class="text-purple-600 ml-1">Latest</span>{% endif %}
+            {% if item.upcoming %}<span class="text-orange-600 ml-1">Upcoming</span>{% endif %}
+          </td>
+          <td class="px-3 py-2">
+            {% if item.news|length > 50 %}
+              {{ item.news|slice:":50" }}...
+              <button type="button" onclick="openModal('news', `{{ item.news|escapejs }}`)" class="text-blue-600 underline">
+                Read more
+              </button>
+            {% else %}
+              {{ item.news }}
+            {% endif %}
+          </td>
+          <td class="px-3 py-2">
+            <form method="POST" action="{% url 'delete_news' item.id %}">
+              {% csrf_token %}
+              <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition">
+                Delete
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+    <div class="flex justify-center items-center mt-6 space-x-2">
+  {% if news_items.has_previous %}
+    <a href="?page={{ news_items.previous_page_number }}"
+       class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition">
+      Previous
+    </a>
+  {% else %}
+    <span class="px-4 py-2 bg-gray-100 text-gray-400 rounded cursor-not-allowed">Previous</span>
+  {% endif %}
+
+  {% for num in news_items.paginator.page_range %}
+    {% if news_items.number == num %}
+      <span class="px-4 py-2 bg-[#06038D] text-white rounded">{{ num }}</span>
+    {% else %}
+      <a href="?page={{ num }}" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition">{{ num }}</a>
+    {% endif %}
+  {% endfor %}
+
+  {% if news_items.has_next %}
+    <a href="?page={{ news_items.next_page_number }}"
+       class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition">
+      Next
+    </a>
+  {% else %}
+    <span class="px-4 py-2 bg-gray-100 text-gray-400 rounded cursor-not-allowed">Next</span>
+  {% endif %}
+</div>
+</section>
+
+
+         <!-- Pagination -->
+
+
+
+
+<!-- Single Modal for Read More & Delete Confirmation -->
+<div id="newsModal" class="fixed inset-0 hidden bg-black bg-opacity-50 items-center justify-center">
+  <div class="bg-white p-6 rounded w-11/12 md:w-1/2 max-h-[80vh] overflow-y-auto">
+    <h2 id="modalTitle" class="text-lg font-semibold mb-4">Modal Title</h2>
+    <div id="modalContent" class="text-gray-700 mb-4"></div>
+    <div class="flex justify-end gap-4">
+      <button id="modalCancel" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">Close</button>
+      <button id="modalConfirm" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 hidden">Yes, Delete</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let selectedIds = [];
+const modal = document.getElementById("newsModal");
+const modalTitle = document.getElementById("modalTitle");
+const modalContent = document.getElementById("modalContent");
+const modalCancel = document.getElementById("modalCancel");
+const modalConfirm = document.getElementById("modalConfirm");
+
+// Function to open modal for news, delete, or message
+function openModal(type, content = "") {
+  modalConfirm.classList.add("hidden"); // hide confirm by default
+
+  if (type === 'news') {
+    modalTitle.innerText = "Full News";
+    modalContent.innerText = content;
+    modalCancel.innerText = "Close";
+  }
+  else if (type === 'delete') {
+    modalTitle.innerText = "Confirm Delete";
+
+    // Collect selected news headlines
+    const headlines = selectedIds.map(id => {
+      const row = document.querySelector(`.row-checkbox[data-id='${id}']`).closest("tr");
+      return row.querySelector("td:nth-child(3)").innerText;
+    });
+
+    modalContent.innerHTML = `
+      <p>Do you want to delete:</p>
+      <ul class="list-disc pl-5 mt-2">
+        ${headlines.map(h => `<li>${h}</li>`).join('')}
+      </ul>
+    `;
+    modalConfirm.classList.remove("hidden");
+    modalCancel.innerText = "Cancel";
+  }
+  else if (type === 'message') {
+    modalTitle.innerText = "Status";
+    modalContent.innerHTML = `<p>${content}</p>`;
+    modalCancel.innerText = "OK";
+  }
+
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+}
+
+// Close modal
+modalCancel.addEventListener("click", () => {
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+});
+
+// Handle delete selected logic
+document.addEventListener("DOMContentLoaded", function () {
+  const deleteBtn = document.getElementById("delete-selected");
+  const selectAll = document.getElementById("select-all");
+
+  if (selectAll) {
+    selectAll.addEventListener("change", function () {
+      document.querySelectorAll(".row-checkbox").forEach(cb => cb.checked = selectAll.checked);
+      toggleDeleteButton();
+    });
+  }
+
+  document.querySelectorAll(".row-checkbox").forEach(cb => {
+    cb.addEventListener("change", toggleDeleteButton);
+  });
+
+  function toggleDeleteButton() {
+    const anyChecked = document.querySelectorAll(".row-checkbox:checked").length > 0;
+    deleteBtn.classList.toggle("hidden", !anyChecked);
+  }
+
+  deleteBtn.addEventListener("click", () => {
+    selectedIds = Array.from(document.querySelectorAll(".row-checkbox:checked")).map(cb => cb.dataset.id);
+    if (selectedIds.length > 0) openModal('delete');
+  });
+
+  // Confirm deletion
+  modalConfirm.addEventListener("click", async () => {
+    try {
+      const resp = await fetch("{% url 'delete_selected_news' %}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": "{{ csrf_token }}",
+        },
+        body: JSON.stringify({ ids: selectedIds }),
+      });
+      const data = await resp.json();
+
+      if (data.status === "success") {
+        openModal('message', "Selected news deleted successfully!");
+        modalCancel.onclick = () => location.reload();
+      } else {
+        openModal('message', "Error: " + data.message);
+      }
+    } catch (err) {
+      openModal('message', "An unexpected error occurred.");
+      console.error(err);
+    }
+  });
+});
+</script>
+
+
+
+
+
+<script src="./static/js/admin_scripts.js"></script>
+</body>
+</html>

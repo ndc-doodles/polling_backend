@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-[#151a37] font-sans">
+
+  <div class="flex ">
+
+
+
+<div id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-[#06038D] text-white p-6 z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+  <div class="flex items-center justify-between mb-6">
+    <div class="w-full bg-white flex justify-center pl-10">
+<a href="index.html" id="brand" class="transition-all block">
+      <h1 class="mt-2 text-lg md:text-xl md:mt-0 uppercase font-bold text-[#06038D]">Tamil Nadu Polling 2026</h1>
+      
+    </a>    </div>
+    <button onclick="toggleSidebar()" class="md:hidden text-white text-2xl">&times;</button>
+  </div>
+   <nav>
+    <ul class="space-y-4 text-sm">
+      <li>
+        <a href="{% url 'dashboard' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Dashboard</a>
+      </li>
+         <li>
+        <a href="{% url 'admin_party' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Party</a>
+      </li>
+        <a href="admin_candidates.html" class="block py-2 px-4 rounded bg-white text-[#151a37]" >Candidates</a>
+      </li>
+       <li>
+        <a href="{% url 'opinion' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Public Opinions</a>
+      </li>
+      <li>
+        <a href="{% url 'admin_news' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">News</a>
+      </li>
+       <li>
+        <a href="{% url 'admin_blog' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Blogs</a>
+      </li>
+      <li>
+        <a href="{% url 'admin_contact' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Contact Form </a>
+      </li>
+        <li>
+        <a href="{% url 'vote_analysis' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Votes</a>
+      </li>
+      <li>
+        <a href="{% url 'logout' %}" class="block py-2 px-4 rounded bg-[red] text-white">Logout</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<button onclick="toggleSidebar()" class="md:hidden fixed top-4 left-4 z-50 bg-[#06038D] text-white p-2 rounded shadow-lg">
+  &#9776;
+</button>
+
+
+  <!-- ✅ Popup for messages -->
+  {% if messages %}
+  <div class="fixed top-5 right-5 z-50 space-y-2">
+    {% for message in messages %}
+      <div class="px-4 py-3 rounded-lg shadow-lg text-white
+                  {% if message.tags == 'success' %}bg-green-600{% else %}bg-red-600{% endif %}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <section class="px-6 md:px-10 lg:px-20 py-10 md:ml-64 w-full">
+    <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-[#06038D] text-center md:text-left">
+      Manage Candidates
+    </h2>
+
+    <!-- Candidate Form -->
+    <div class="bg-white p-6 rounded shadow mb-8 w-full max-w-4xl">
+      <h3 class="text-lg font-semibold mb-4" id="form-title">Add Candidate</h3>
+
+<form method="POST" enctype="multipart/form-data" class="space-y-4">
+  {% csrf_token %}
+  <div class="flex flex-col md:flex-row gap-4">
+    <div class="flex-1">
+      <label class="block text-sm font-medium mb-1">Candidate Name</label>
+      <input type="text" name="name" class="w-full border border-gray-300 rounded px-3 py-2" required>
+    </div>
+    <div class="flex-1">
+      <label class="block text-sm font-medium mb-1">District</label>
+      <select id="district-select" name="district" class="w-full border border-gray-300 rounded px-3 py-2" required>
+        <option value="">Select District</option>
+        {% for d in districts %}
+          <option value="{{ d.id }}">{{ d.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <div class="flex flex-col md:flex-row gap-4">
+    <div class="flex-1">
+      <label class="block text-sm font-medium mb-1">Constituency</label>
+      <select id="constituency-select" name="constituency" class="w-full border border-gray-300 rounded px-3 py-2" required>
+        <option value="">Select Constituency</option>
+      </select>
+      <p id="loading-msg" class="text-sm text-gray-500 mt-1 hidden">Loading constituencies...</p>
+    </div>
+
+    <div class="flex-1">
+      <label class="block text-sm font-medium mb-1">Party</label>
+      <select name="party" class="w-full border border-gray-300 rounded px-3 py-2" required>
+        <option value="">Select Party</option>
+        {% for p in parties %}
+          <option value="{{ p.id }}">{{ p.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <div class="flex flex-col md:flex-row gap-4">
+    <div class="flex-1">
+      <label class="block text-sm font-medium mb-1">Candidate Image</label>
+      <input type="file" name="candidate_image" accept="image/*" class="w-full border border-gray-300 rounded px-3 py-2">
+    </div>
+  </div>
+
+  <div class="flex gap-4">
+    <button type="submit" class="bg-[#06038D] text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+      Add Candidate
+    </button>
+  </div>
+</form>
+
+<!-- 🔽 Dynamic Constituency Loader Script -->
+<script>
+document.getElementById('district-select').addEventListener('change', function() {
+  const districtId = this.value;
+  const constituencySelect = document.getElementById('constituency-select');
+  const loadingMsg = document.getElementById('loading-msg');
+
+  // Reset options
+  constituencySelect.innerHTML = '<option value="">Select Constituency</option>';
+
+  if (!districtId) return;
+
+  // Show loading message
+  loadingMsg.classList.remove('hidden');
+
+  fetch(`/get-constituencies/${districtId}/`)
+    .then(response => response.json())
+    .then(data => {
+      loadingMsg.classList.add('hidden');
+
+      if (data.constituencies.length === 0) {
+        constituencySelect.innerHTML = '<option value="">No constituencies available</option>';
+      } else {
+        data.constituencies.forEach(c => {
+          const option = document.createElement('option');
+          option.value = c.id;
+          option.textContent = c.name;
+          constituencySelect.appendChild(option);
+        });
+      }
+    })
+    .catch(error => {
+      loadingMsg.classList.add('hidden');
+      console.error('Error fetching constituencies:', error);
+    });
+});
+</script>
+
+
+
+
+    </div>
+
+    <!-- Candidate Table -->
+    <div class="overflow-x-auto bg-white rounded shadow w-full">
+      <table class="min-w-full divide-y divide-gray-200 text-sm w-full">
+        <thead class="bg-[#06038D] text-white">
+          <tr>
+            <th class="px-3 py-2 text-left">Candidate</th>
+            <th class="px-3 py-2 text-left">Name</th>
+            <th class="px-3 py-2 text-left">District</th>
+            <th class="px-3 py-2 text-left">Constituency</th>
+            <th class="px-3 py-2 text-left">Party</th>
+            <th class="px-3 py-2 text-left">Party Symbol</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          {% for cand in candidates %}
+          <tr>
+            <td class="px-3 py-2">
+              {% if cand.image %}
+                <img src="{{ cand.image.url }}" alt="{{ cand.name }}" class="w-10 h-10 rounded-full object-cover">
+              {% else %}
+                <span class="text-gray-400">No Image</span>
+              {% endif %}
+            </td>
+            <td class="px-3 py-2">{{ cand.name }}</td>
+            <td class="px-3 py-2">{{ cand.district.name }}</td>
+            <td class="px-3 py-2">{{ cand.constituency.name }}</td>
+            <td class="px-3 py-2">{{ cand.party.name }}</td>
+            <td class="px-3 py-2">
+              {% if cand.party.image %}
+                <img src="{{ cand.party.image.url }}" alt="{{ cand.party.name }}" class="w-10 h-10 object-contain">
+              {% else %}
+                <span class="text-gray-400">No Symbol</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6" class="text-center py-4 text-gray-500">No candidates added yet.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+
+    </div>
+
+        <!-- Pagination -->
+<div class="flex justify-center items-center mt-6 space-x-2">
+  {% if candidates.has_previous %}
+    <a href="?page={{ candidates.previous_page_number }}"
+       class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition">
+      Previous
+    </a>
+  {% else %}
+    <span class="px-4 py-2 bg-gray-100 text-gray-400 rounded cursor-not-allowed">Previous</span>
+  {% endif %}
+
+  {% for num in candidates.paginator.page_range %}
+    {% if candidates.number == num %}
+      <span class="px-4 py-2 bg-[#06038D] text-white rounded">{{ num }}</span>
+    {% else %}
+      <a href="?page={{ num }}" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition">{{ num }}</a>
+    {% endif %}
+  {% endfor %}
+
+  {% if candidates.has_next %}
+    <a href="?page={{ candidates.next_page_number }}"
+       class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition">
+      Next
+    </a>
+  {% else %}
+    <span class="px-4 py-2 bg-gray-100 text-gray-400 rounded cursor-not-allowed">Next</span>
+  {% endif %}
+</div>
+
+  </section>
+
+
+
+
+
+<script src="./static/js/admin_scripts.js"></script>
+</body>
+</html>

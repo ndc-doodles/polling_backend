@@ -1,7 +1,8 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from cloudinary.models import CloudinaryField
 from django.db.models import ForeignKey
-
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
 class Party(models.Model):
     name = models.CharField(max_length=100)
@@ -14,7 +15,7 @@ class Party(models.Model):
 class AlignedParty(models.Model):
     name = models.CharField(max_length=100)
     parties = models.ManyToManyField(Party, related_name='aligned_parties')  # ✅ Many-to-many relationship
-    image = CloudinaryField('aligned_party_image')
+
 
     def __str__(self):
         return self.name
@@ -38,6 +39,7 @@ class Candidate(models.Model):
     district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='candidates')
     constituency = models.ForeignKey(Constituency, on_delete=models.CASCADE, related_name='candidates')
     party = models.ForeignKey(Party, on_delete=models.CASCADE, related_name='candidates')
+    aligned_party = models.ForeignKey('AlignedParty', on_delete=models.SET_NULL, null=True, blank=True, related_name='candidates')
     image = CloudinaryField('candidate_image', blank=True, null=True)
 
     def __str__(self):
@@ -46,6 +48,12 @@ class Candidate(models.Model):
     @property
     def party_image(self):
         return self.party.image.url if self.party.image else None
+
+    def save(self, *args, **kwargs):
+        # Automatically set aligned_party if candidate's party belongs to one
+        aligned = AlignedParty.objects.filter(parties=self.party).first()
+        self.aligned_party = aligned if aligned else None
+        super().save(*args, **kwargs)
 
 
 class News(models.Model):
@@ -113,5 +121,7 @@ class Blog(models.Model):
 
     def __str__(self):
         return f"{self.heading}"
+
+
 
 

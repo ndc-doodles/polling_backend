@@ -1,0 +1,409 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-[#151a37] font-sans">
+
+  <div class="flex ">
+
+
+
+<div id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-[#06038D] text-white p-6 z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+  <div class="flex items-center justify-between mb-6">
+    <div class="w-full bg-white flex justify-center pl-10">
+<a href="index.html" id="brand" class="transition-all block">
+      <h1 class="mt-2 text-lg md:text-xl md:mt-0 uppercase font-bold text-[#06038D]">Tamil Nadu Polling 2026</h1>
+
+    </a>    </div>
+    <button onclick="toggleSidebar()" class="md:hidden text-white text-2xl">&times;</button>
+  </div>
+   <nav>
+    <ul class="space-y-4 text-sm">
+      <li>
+        <a href="{% url 'dashboard' %}"  class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Dashboard</a>
+      </li>
+        <li>
+        <a href="{% url 'admin_party' %}" class="block py-2 px-4 rounded bg-white text-[#151a37]" >Party</a>
+      </li>
+      <li>
+        <a href="{% url 'candidates' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Candidates</a>
+      </li>
+      <li>
+        <a href="{% url 'opinion' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Public Opinions</a>
+      </li>
+      <li>
+        <a href="{% url 'admin_news' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">News</a>
+      </li>
+       <li>
+        <a href="{% url 'admin_blog' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Blogs</a>
+      </li>
+      <li>
+        <a href="{% url 'admin_contact' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Contact Form </a>
+      </li>
+        <li>
+        <a href="{% url 'vote_analysis' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Votes</a>
+      </li>
+      <li>
+        <a href="{% url 'logout' %}" class="block py-2 px-4 rounded bg-[red] text-white">Logout</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<button onclick="toggleSidebar()" class="md:hidden fixed top-4 left-4 z-50 bg-[#06038D] text-white p-2 rounded shadow-lg">
+  &#9776;
+</button>
+
+
+
+<section class="px-6 md:px-20 py-10 md:ml-64 w-full space-y-12">
+
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl sm:text-3xl font-bold text-[#06038D]">Party Management</h2>
+    <div class="flex gap-3">
+      <button id="openPartyModal" class="bg-[#06038D] text-white px-4 py-2 rounded hover:bg-[#050279] transition">
+        + Add Party
+      </button>
+      <button id="openAlignedModal" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
+        + Add Aligned Party
+      </button>
+    </div>
+  </div>
+
+  <!-- Parties Table -->
+  <div class="bg-white rounded-lg shadow p-4">
+    <h3 class="text-lg font-semibold mb-3 text-[#06038D]">Parties</h3>
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200 text-sm">
+  <thead class="bg-[#06038D] text-white">
+    <tr>
+      <th class="px-3 py-2 text-left">Name</th>
+      <th class="px-3 py-2 text-left">Image</th>
+      <th class="px-3 py-2 text-left">Actions</th>
+    </tr>
+  </thead>
+  <tbody class="divide-y divide-gray-200">
+    {% for party in parties %}
+    <tr>
+      <td class="px-3 py-2 font-medium">{{ party.name }}</td>
+      <td class="px-3 py-2">
+        <img src="{{ party.image.url }}" alt="{{ party.name }}" class="w-10 h-10 object-cover rounded border">
+      </td>
+      <td class="px-3 py-2">
+        <button
+          class="text-red-600 hover:underline delete-party"
+          data-id="{{ party.id }}"
+          data-name="{{ party.name }}">
+          Delete
+        </button>
+      </td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="3" class="text-center py-3 text-gray-500">No parties found.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+    </div>
+  </div>
+
+  <!-- Aligned Parties Table -->
+  <div class="bg-white rounded-lg shadow p-4">
+    <h3 class="text-lg font-semibold mb-3 text-[#06038D]">Aligned Parties</h3>
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200 text-sm">
+        <thead class="bg-[#06038D] text-white">
+          <tr>
+            <th class="px-3 py-2 text-left">Name</th>
+            <th class="px-3 py-2 text-left">Parties</th>
+            <th class="px-3 py-2 text-left">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          {% for aligned in aligned_parties %}
+          <tr>
+            <td class="px-3 py-2 font-medium">{{ aligned.name }}</td>
+            <td class="px-3 py-2">
+              {% for p in aligned.parties.all %}
+                <span class="inline-block bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded mr-1 mb-1">{{ p.name }}</span>
+              {% endfor %}
+            </td>
+            <td class="px-3 py-2">
+              <button
+                class="text-blue-600 hover:underline edit-aligned"
+                data-id="{{ aligned.id }}"
+                data-name="{{ aligned.name }}"
+                data-parties="{{ aligned.parties.all|join:',' }}">
+                Edit
+              </button>
+            </td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="3" class="text-center py-3 text-gray-500">No aligned parties found.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <!-- ======================= PARTY MODAL ======================= -->
+  <div id="partyModal" class="fixed inset-0 hidden bg-black bg-opacity-50 items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 w-11/12 sm:w-1/3 shadow-xl">
+      <h3 class="text-xl font-semibold text-[#06038D] mb-4">Add New Party</h3>
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="party">
+        <div class="mb-3">
+          <label class="block text-sm font-medium mb-1">Party Name</label>
+          <input type="text" name="party_name" required
+                 class="w-full border p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#06038D]">
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-1">Party Image</label>
+          <input type="file" name="party_image" accept="image/*" required
+                 class="w-full border p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#06038D]">
+        </div>
+        <div class="flex justify-end gap-3">
+          <button type="button" id="closePartyModal" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">
+            Cancel
+          </button>
+          <button type="submit" class="bg-[#06038D] text-white px-4 py-2 rounded hover:bg-[#050279]">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================= ALIGNED PARTY MODAL ======================= -->
+  <div id="alignedModal" class="fixed inset-0 hidden bg-black bg-opacity-50 items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 w-11/12 sm:w-1/3 shadow-xl">
+      <h3 id="alignedModalTitle" class="text-xl font-semibold text-[#06038D] mb-4">Add Aligned Party</h3>
+      <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="aligned">
+        <input type="hidden" name="aligned_id" id="alignedId">
+        <div class="mb-3">
+          <label class="block text-sm font-medium mb-1">Aligned Party Name</label>
+          <input type="text" name="aligned_party_name" id="alignedName" required
+                 class="w-full border p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#06038D]">
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-1">Select Parties</label>
+          <div id="partyOptions" class="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto border p-2 rounded">
+            {% for party in parties %}
+              <label class="flex items-center space-x-2">
+                <input type="checkbox" name="selected_parties" value="{{ party.id }}" class="accent-[#06038D] party-checkbox">
+                <span>{{ party.name }}</span>
+              </label>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="flex justify-end gap-3">
+          <button type="button" id="closeAlignedModal" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">
+            Cancel
+          </button>
+          <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("✅ Party Management JS loaded");
+
+  // ======== Elements ========
+  const partyModal = document.getElementById("partyModal");
+  const alignedModal = document.getElementById("alignedModal");
+
+  const openPartyModal = document.getElementById("openPartyModal");
+  const closePartyModal = document.getElementById("closePartyModal");
+
+  const openAlignedModal = document.getElementById("openAlignedModal");
+  const closeAlignedModal = document.getElementById("closeAlignedModal");
+
+  const alignedModalTitle = document.getElementById("alignedModalTitle");
+  const alignedId = document.getElementById("alignedId");
+  const alignedName = document.getElementById("alignedName");
+
+  // ======== Safe Data from Django ========
+  let assignedPartyIds = [];
+  try {
+    assignedPartyIds = JSON.parse('{{ assigned_party_ids|safe|escapejs }}');
+  } catch (e) {
+    console.error("Error parsing assigned_party_ids:", e);
+  }
+  console.log("📦 assignedPartyIds =", assignedPartyIds);
+
+  // ======== Party Modal ========
+  if (openPartyModal && closePartyModal && partyModal) {
+    openPartyModal.addEventListener("click", () => {
+      console.log("🟢 Opening Party Modal");
+      partyModal.classList.remove("hidden");
+      partyModal.classList.add("flex");
+    });
+
+    closePartyModal.addEventListener("click", () => {
+      console.log("🔴 Closing Party Modal");
+      partyModal.classList.remove("flex");
+      partyModal.classList.add("hidden");
+    });
+  }
+
+  // ======== Aligned Party Modal ========
+  if (openAlignedModal && closeAlignedModal && alignedModal) {
+    openAlignedModal.addEventListener("click", () => {
+      console.log("🟢 Opening Aligned Party Modal");
+      openAlignedPartyModal();
+    });
+
+    closeAlignedModal.addEventListener("click", () => {
+      console.log("🔴 Closing Aligned Party Modal");
+      alignedModal.classList.remove("flex");
+      alignedModal.classList.add("hidden");
+    });
+  }
+
+  // ======== Function: Open Aligned Modal ========
+  function openAlignedPartyModal(editData = null) {
+    alignedModal.classList.remove("hidden");
+    alignedModal.classList.add("flex");
+    alignedModalTitle.textContent = editData ? "Edit Aligned Party" : "Add Aligned Party";
+
+    alignedId.value = editData ? editData.id : "";
+    alignedName.value = editData ? editData.name : "";
+
+    const checkboxes = document.querySelectorAll(".party-checkbox");
+    checkboxes.forEach(cb => {
+      const id = parseInt(cb.value);
+      cb.checked = false;
+      const isAssigned = assignedPartyIds.includes(id);
+      const isEditable = editData && editData.parties.includes(id);
+      cb.disabled = isAssigned && !isEditable;
+      cb.parentElement.style.opacity = cb.disabled ? "0.5" : "1";
+    });
+
+    if (editData) {
+      checkboxes.forEach(cb => {
+        if (editData.parties.includes(parseInt(cb.value))) cb.checked = true;
+      });
+    }
+  }
+
+  // ======== Edit Aligned Party ========
+  document.querySelectorAll(".edit-aligned").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = parseInt(btn.dataset.id);
+      const name = btn.dataset.name;
+      const partyNames = btn.dataset.parties.split(",");
+      const partyIds = [];
+
+      document.querySelectorAll(".party-checkbox").forEach(cb => {
+        if (partyNames.includes(cb.nextElementSibling.textContent.trim())) {
+          partyIds.push(parseInt(cb.value));
+        }
+      });
+
+      console.log("🛠 Editing Aligned Party", { id, name, partyIds });
+      openAlignedPartyModal({ id, name, parties: partyIds });
+    });
+  });
+
+  // ======== Click Outside to Close ========
+  [partyModal, alignedModal].forEach(modal => {
+    if (!modal) return;
+    modal.addEventListener("click", e => {
+      if (e.target === modal) {
+        modal.classList.remove("flex");
+        modal.classList.add("hidden");
+      }
+    });
+  });
+});
+
+    document.addEventListener("DOMContentLoaded", function () {
+  const deleteModal = document.getElementById("deleteModal");
+  const deleteMessage = document.getElementById("deleteMessage");
+  const deleteForm = document.getElementById("deleteForm");
+  const cancelDelete = document.getElementById("cancelDelete");
+
+  // Handle Aligned Party Delete
+  document.querySelectorAll(".delete-aligned").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      const name = btn.dataset.name;
+      deleteMessage.textContent = `Are you sure you want to delete the aligned party "${name}"?`;
+      deleteForm.action = `/delete-aligned-party/${id}/`;
+      deleteModal.classList.remove("hidden");
+      deleteModal.classList.add("flex");
+    });
+  });
+
+  // Handle Normal Party Delete
+  document.querySelectorAll(".delete-party").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      const name = btn.dataset.name;
+      deleteMessage.textContent = `Are you sure you want to delete the party "${name}"?`;
+      deleteForm.action = `/delete-party/${id}/`;
+      deleteModal.classList.remove("hidden");
+      deleteModal.classList.add("flex");
+    });
+  });
+
+  // Cancel delete
+  cancelDelete.addEventListener("click", () => {
+    deleteModal.classList.add("hidden");
+    deleteModal.classList.remove("flex");
+  });
+
+  // Close modal when clicking outside
+  deleteModal.addEventListener("click", (e) => {
+    if (e.target === deleteModal) {
+      deleteModal.classList.add("hidden");
+      deleteModal.classList.remove("flex");
+    }
+  });
+});
+
+
+</script>
+
+
+    <!-- DELETE CONFIRMATION MODAL -->
+<div id="deleteModal" class="fixed inset-0 hidden bg-black bg-opacity-50 items-center justify-center z-50">
+  <div class="bg-white rounded-lg p-6 w-11/12 sm:w-1/3 text-center shadow-xl">
+    <h3 class="text-lg font-semibold text-[#06038D] mb-4">Confirm Deletion</h3>
+    <p id="deleteMessage" class="text-gray-700 mb-4"></p>
+    <div class="flex justify-center gap-4">
+      <form id="deleteForm" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Delete</button>
+      </form>
+      <button id="cancelDelete" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+
+</section>
+
+
+
+
+
+      <script src="./static/js/admin_scripts.js"></script>
+</body>
+</html>

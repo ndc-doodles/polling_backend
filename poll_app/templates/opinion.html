@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-[#151a37] font-sans">
+
+  <div class="flex ">
+
+
+
+<div id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-[#06038D] text-white p-6 z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+  <div class="flex items-center justify-between mb-6">
+    <div class="w-full bg-white flex justify-center pl-10">
+<a href="index.html" id="brand" class="transition-all block">
+      <h1 class="mt-2 text-lg md:text-xl md:mt-0 uppercase font-bold text-[#06038D]">Tamil Nadu Polling 2026</h1>
+      
+    </a>    </div>
+    <button onclick="toggleSidebar()" class="md:hidden text-white text-2xl">&times;</button>
+  </div>
+   <nav>
+    <ul class="space-y-4 text-sm">
+      <li>
+        <a href="{% url 'dashboard' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Dashboard</a>
+      </li>
+         <li>
+        <a href="{% url 'admin_party' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Party</a>
+      </li>
+      <li>
+        <a href="{% url 'candidates' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Candidates</a>
+      </li>
+       <li>
+        <a href="{% url 'opinion' %}" class="block py-2 px-4 rounded bg-white text-[#151a37]" >Public Opinions</a>
+      </li>
+      <li>
+        <a href="{% url 'admin_news' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">News</a>
+      </li>
+       <li>
+        <a href="{% url 'admin_blog' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Blogs</a>
+      </li>
+      <li>
+        <a href="{% url 'admin_contact' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Contact Form </a>
+      </li>
+        <li>
+        <a href="{% url 'vote_analysis' %}" class="block py-2 px-4 rounded hover:bg-white hover:text-[#151a37]">Votes</a>
+      </li>
+      <li>
+        <a href="{% url 'logout' %}" class="block py-2 px-4 rounded bg-[red] text-white">Logout</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<button onclick="toggleSidebar()" class="md:hidden fixed top-4 left-4 z-50 bg-[#06038D] text-white p-2 rounded shadow-lg">
+  &#9776;
+</button>
+
+
+<section class="px-6 md:px-20 py-10 md:ml-64 w-full">
+  <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-[#06038D] text-center md:text-left">Public Opinions</h2>
+
+
+
+<!-- Bulk Delete Form (separate, NOT wrapping the table) -->
+<form id="bulk-delete-form" method="POST" action="{% url 'delete_selected_opinions' %}">
+  {% csrf_token %}
+  <div class="flex  mb-3">
+    <button type="submit"
+      id="delete-selected"
+      class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+      disabled>
+      Delete Selected
+    </button>
+  </div>
+</form>
+
+<!-- Opinions Table (NOT inside any form) -->
+<div class="overflow-x-auto bg-white rounded shadow w-full">
+  <table class="min-w-full divide-y divide-gray-200 text-sm w-full">
+    <thead class="bg-[#06038D] text-white">
+      <tr>
+        <th class="px-3 py-2 text-left">
+          <input type="checkbox" id="select-all" class="form-checkbox h-4 w-4 text-white">
+        </th>
+        <th class="px-3 py-2 text-left">First Name</th>
+        <th class="px-3 py-2 text-left">Last Name</th>
+        <th class="px-3 py-2 text-left">Email</th>
+        <th class="px-3 py-2 text-left">Opinion</th>
+        <th class="px-3 py-2 text-left">Actions</th>
+      </tr>
+    </thead>
+    <tbody id="opinions-table-body" class="divide-y divide-gray-200">
+      {% for opinion in opinions %}
+      <tr class="opinion-row hover:bg-gray-50">
+        <td class="px-3 py-2">
+          <input type="checkbox" class="row-checkbox form-checkbox h-4 w-4 text-[#06038D]" data-id="{{ opinion.id }}">
+        </td>
+        <td class="px-3 py-2">{{ opinion.first_name }}</td>
+        <td class="px-3 py-2">{{ opinion.last_name }}</td>
+        <td class="px-3 py-2">{{ opinion.email }}</td>
+        <td class="px-3 py-2">
+  {% if opinion.message|length > 100 %}
+    {{ opinion.message|slice:":100" }}...
+    <button type="button"
+            class="text-blue-600 hover:underline read-more-btn"
+            data-message="{{ opinion.message|escapejs }}">
+      Read more
+    </button>
+  {% else %}
+    {{ opinion.message }}
+  {% endif %}
+</td>
+
+        <td class="px-3 py-2">
+          <!-- Individual delete form (NOT nested) -->
+          <form method="POST" action="{% url 'delete_opinion' opinion.id %}" class="inline">
+            {% csrf_token %}
+            <button type="submit" class="delete-btn bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition">
+              Delete
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="6" class="text-center py-4 text-gray-500">No opinions available.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+    <!-- Pagination -->
+<div class="flex justify-center items-center mt-6 space-x-2">
+  {% if opinions.has_previous %}
+    <a href="?page={{ opinions.previous_page_number }}"
+       class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition">
+      Previous
+    </a>
+  {% else %}
+    <span class="px-4 py-2 bg-gray-100 text-gray-400 rounded cursor-not-allowed">Previous</span>
+  {% endif %}
+
+  {% for num in opinions.paginator.page_range %}
+    {% if opinions.number == num %}
+      <span class="px-4 py-2 bg-[#06038D] text-white rounded">{{ num }}</span>
+    {% else %}
+      <a href="?page={{ num }}" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition">{{ num }}</a>
+    {% endif %}
+  {% endfor %}
+
+  {% if opinions.has_next %}
+    <a href="?page={{ opinions.next_page_number }}"
+       class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition">
+      Next
+    </a>
+  {% else %}
+    <span class="px-4 py-2 bg-gray-100 text-gray-400 rounded cursor-not-allowed">Next</span>
+  {% endif %}
+</div>
+
+
+
+
+    <!-- Message Modal -->
+<div id="messageModal"
+     class="fixed inset-0 hidden bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg shadow-xl max-w-lg w-full p-6 relative">
+    <h2 class="text-lg font-semibold mb-3 text-gray-800">Full Message</h2>
+    <p id="modalMessage" class="text-gray-700 whitespace-pre-wrap break-words"></p>
+
+    <!-- Close Button -->
+    <button id="closeModal"
+            class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+      ✖
+    </button>
+  </div>
+</div>
+
+
+
+<!-- JS: select all, enable/disable bulk-delete button, and attach selected ids to bulk form -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const selectAll = document.getElementById("select-all");
+  const deleteButton = document.getElementById("delete-selected");
+  const bulkForm = document.getElementById("bulk-delete-form");
+
+  function getRowCheckboxes() {
+    return Array.from(document.querySelectorAll(".row-checkbox"));
+  }
+
+  // toggle checkboxes when "select all" changed
+  selectAll?.addEventListener("change", function () {
+    const boxes = getRowCheckboxes();
+    boxes.forEach(cb => cb.checked = selectAll.checked);
+    toggleDeleteButton();
+  });
+
+  // enable/disable delete button when individual checkboxes change
+  function toggleDeleteButton() {
+    const boxes = getRowCheckboxes();
+    const anyChecked = boxes.some(cb => cb.checked);
+    deleteButton.disabled = !anyChecked;
+  }
+
+  // attach change listeners to row checkboxes
+  getRowCheckboxes().forEach(cb => cb.addEventListener("change", function () {
+    // If any is unchecked, uncheck selectAll
+    if (!this.checked) selectAll.checked = false;
+    // If all checked, set selectAll checked
+    const boxes = getRowCheckboxes();
+    if (boxes.every(b => b.checked)) selectAll.checked = true;
+    toggleDeleteButton();
+  }));
+
+  // On bulk form submit: add hidden inputs for selected ids, then submit
+  bulkForm?.addEventListener("submit", function (e) {
+    const boxes = getRowCheckboxes().filter(cb => cb.checked);
+    if (boxes.length === 0) {
+      e.preventDefault();
+      alert("Please select at least one opinion to delete.");
+      return;
+    }
+
+    // Remove previously added hidden inputs (if any)
+    Array.from(bulkForm.querySelectorAll('input[name="selected_ids[]"]')).forEach(n => n.remove());
+
+    // Add hidden inputs for selected ids
+    boxes.forEach(cb => {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = "selected_ids[]";
+      input.value = cb.getAttribute("data-id");
+      bulkForm.appendChild(input);
+    });
+
+    // Note: CSRF token is already present in the bulkForm from {% csrf_token %}
+    // Allow the form to submit normally (redirect handled by your view)
+  });
+});
+
+    document.addEventListener("DOMContentLoaded", function () {
+  const modal = document.getElementById("messageModal");
+  const modalMessage = document.getElementById("modalMessage");
+  const closeModal = document.getElementById("closeModal");
+
+  // Open modal on 'Read more' click
+  document.querySelectorAll(".read-more-btn").forEach(button => {
+    button.addEventListener("click", () => {
+      const message = button.getAttribute("data-message");
+      modalMessage.textContent = message;
+      modal.classList.remove("hidden");
+    });
+  });
+
+  // Close modal when ✖ clicked or background clicked
+  closeModal.addEventListener("click", () => modal.classList.add("hidden"));
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) modal.classList.add("hidden");
+  });
+});
+
+
+</script>
+
+</section>
+
+
+
+
+
+
+
+
+
+<script src="./static/js/admin_scripts.js"></script>
+</body>
+</html>
